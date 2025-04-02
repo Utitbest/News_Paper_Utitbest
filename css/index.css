@@ -104,11 +104,15 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
 .navstyle ul li a:hover{
     border-bottom: red 2px solid;
 }
+.nass{
+    border-bottom: red 2px solid;
+}
 .navstyle ul li a{
     text-decoration: none;
     font-weight: 600;
     /* font-family: "Roboto", sans-serif; */
     color: var(--darkblue-color);
+    position: relative;
 }
 .navstyle  .social_media{
     display: flex;
@@ -139,7 +143,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     font-weight: 600;
     color: var(--grat-color-);
 }
-navstyle .searchbar .bb{
+.navstyle .searchbar .bb{
     color: var(--darkblue-color);
     font-size: initial;
 }
@@ -168,8 +172,8 @@ main .topnotch{
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     padding: 20px;
-    /* max-width: 1200px; */
-    height: 500px;
+    max-width: 1200px;
+    max-height: 500px;
     width: 100%;
     background-color: var(--grey-color);
     box-shadow: 1px 0px 4px 1px #c8c8c8;
@@ -247,7 +251,8 @@ main .topnotch .side-news{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    /* height: 500px; */
+    max-height: 500px;
+
 }
 main .topnotch .side-news .fourplate img{
     width: 100%;
@@ -260,7 +265,7 @@ main .topnotch .side-news .fourplate img{
 main .topnotch .side-news .fourplate{
     position: relative;
     cursor: pointer;
-
+    overflow: hidden;
 } 
 .contenttag h5{
     display: block;
@@ -446,7 +451,6 @@ main .editorspicksworks .firstparentElement{
 }
 .hearder h2{
     width: 100%;
-    /* padding: 0 10px; */
     font-family: "Alegreya", sans-serif;
     color: var(--darkblue-color);
     font-size: 23px;
@@ -565,7 +569,7 @@ main .editorspicksworks .secondparentElement{
 } 
 .smallnew .wordsnote p{
     width: 100%;
-    font-family: "Roboto", sans-serif;
+    font-family: "Alegreya", sans-serif;
     font-size: 16px;
     font-weight: 600;
     color: #1f1e1e;
@@ -606,7 +610,7 @@ main .editorspicksworks .secondparentElement{
     gap: 10px;
 }
 .troubledisv .troubledisv-h2 p{
-    font-family: "Roboto", sans-serif;
+    font-family: "Alegreya", sans-serif;
     font-size: 14px;
     font-weight: 600;
     color: rgb(27, 26, 26);
@@ -624,7 +628,11 @@ main .editorspicksworks .secondparentElement{
     flex-direction: column;
     align-items: center;
     display: flex;
-    
+}
+.ddddsdk{
+    flex-direction: column;
+    display: flex;
+    width: 100%;
 }
 .connetnet h3{
     font-family: "Alegreya", sans-serif;
@@ -845,4 +853,41 @@ main .advertcontainer3 div img{
     width: 100%;
     object-position: cover;
     height: auto;
+}
+.loading-spinner {
+    text-align: center;
+    margin: 50px 0;
+    height: 500px;
+    width: 200px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ccc;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.Newsh1{
+    font-family: "Alegreya", sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    font-style: italic;
+    text-decoration: underline;
+    color: var(--darkblue-color);
+}
+
+.secondMainMan{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
