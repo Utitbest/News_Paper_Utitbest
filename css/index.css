@@ -13,6 +13,15 @@
     padding: 0;
     font-family: "Alegreya", sans-serif;
 }
+html::-webkit-scrollbar{
+    width: 7px;
+    background: #bcbdbe;
+}
+html::-webkit-scrollbar-thumb{
+    width: 2px ;
+    background: #38393a36;
+    border-radius: 50px;
+}
 html{
     scroll-behavior: smooth;
 }
@@ -155,7 +164,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     /* font-family: "Roboto", sans-serif; */
     font-weight: 600;
     color: var(--pickmentblue-color);
-    border-bottom: 2px solid var(--darkblue-color);
+    border-bottom: 1px solid var(--darkblue-color);
 }
 .site-main-content h4 .nn{
     color: var(--yellow-color);
@@ -819,7 +828,7 @@ footer .otherlanguage{
 footer .rightandhonnor{
     width: 100%;
     display: flex;
-    border-top: 2px solid var(--grey-color);
+    border-top: 1px solid var(--grey-color);
     padding: 8px 0 0 0;
     margin-top: 1em;
 }   
@@ -831,29 +840,6 @@ footer .rightandhonnor p{
     font-style: italic;
 }
 
-main .advertcontainer3{
-    width: 100%;
-    height: auto;
-    overflow: hidden;
-    padding: 0 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 15px 0;
-}
-
-main .advertcontainer3 div{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-main .advertcontainer3 div img{
-    width: 100%;
-    object-position: cover;
-    height: auto;
-}
 .loading-spinner {
     text-align: center;
     margin: 50px 0;
@@ -887,7 +873,297 @@ main .advertcontainer3 div img{
 
 .secondMainMan{
     width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--grey-color);
+    cursor: pointer;
+}
+.secondMainMan .addver{
+    width: 100%;
+    height:100% ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.secondMainMan .addver h6{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: var(--grat-color-);
+    height: 20%;
+    text-align: right;
+    width: 60%;
+}
+.worldNewsonly{
+    width: 100%;
+    display: flex;
+    height: auto;
+    border-top: 1px solid var(--darkblue-color);
+    margin-top: 1em;
+    flex-direction: column;
+}
+
+.worldNewsonly .forworldnewsh2{
+    width: 100%;
+    font-family: "Alegreya", sans-serif;
+    color: var(--darkblue-color);
+}
+.worldNewsonlywrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+.worldNewsonlywrapper .wrappnewsMain{
+    width: 100%;
+    display: flex;
+    height: 100%;
+}
+.seniorwrapper{
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    padding: 0 11px;
+}
+.seniorwrapper .forimagenews {
+    width: 50%;
+    overflow: hidden;
+    position: relative;
+    
+}
+.seniorwrapper .forimagenews img{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    /* position: relative; */
+}
+
+.forimagenews-concs{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.peace-unto{
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    position: relative;
+    background:linear-gradient(360deg, rgba(85, 85, 85, 0.486), rgb(255 255 255 / 0%), rgb(255 255 255 / 0%));
+}
+.softman{
+    padding: 0 1em;
+    position: absolute;
+    bottom: 24px;
+} 
+.softman h2{
+    color: var(--grey-color);
+    font-family: "Alegreya", sans-serif;
+    font-size: 17px;
+}
+.softman h5{
+    color: var(--grey-color);
+    font-family: "Alegreya", sans-serif;
+    font-size: 10px;
+    font-weight: lighter;
+}
+.fortextparagram{
+    width: 50%;
+    height: 100%;
+    padding: .6em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.fortextparagram h2{
+    font-family: "Alegreya", sans-serif;
+    color: var(--darkblue-color);
+    font-size: 2em;
+    line-height: 30px;
+}
+.fortextparagram h5{
+    font-family: "Alegreya", sans-serif;
+    color: var(--grat-color-);
+    font-size: 11px;
+}
+.fortextparagram h5 .andwe{
+    color: var(--darkblue-color);
+}
+.fortextparagram p{
+    font-size: 15px;
+    font-family: "Inter", sans-serif;
+
+}
+
+.otherNewsworldnews{
+    width: 100%;
+    display: flex;
+    background-color: var(--grey-color);
+    height: auto;
+}
+.otherNewsworldnews > div{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+    justify-content: space-evenly;
+    /* gap: 20px; */
+}
+.containersnewsworld{
+    width: 200px;
     height: auto;
     display: flex;
     flex-direction: column;
+    margin: .3em;
+}
+.No-image{
+    width: 100%;
+    height: auto;
+    display: flex;
+    overflow: hidden;
+}
+.No-image img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+.textonecs h3{
+    font-family: "Alegreya", sans-serif;
+    font-size:14px;
+    color: rgb(27, 26, 26);
+}
+.textonecs h5{
+    font-size: 10px;
+    font-family: 'Inter', sans-serif;
+    color: var(--darkblue-color);
+
+}
+.anotherAdvert{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    background-color: var(--grey-color);
+    justify-content: center;
+}
+.anotherAdvert img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.fortoborns{
+    width: 100%;
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+    display: flex;
+    height: auto;
+    align-items: center;
+    padding-left: 1em;
+    /* padding-top:.2em ; */
+
+    border-top: 1px solid var(--darkblue-color);
+    border-bottom: 1px solid var(--darkblue-color);
+    background-color: var(--grey-color);
+}
+.fortoborns .sporth3{
+    font-family: "Alegreya", sans-serif;
+    text-align: left;
+    font-size: 1em;
+    color: var(--grey-color);
+    padding: .5em;
+    font-weight: 600;
+    background-color: var(--darkblue-color);
+}
+.jjs{
+    padding: 0 1em !important;
+}
+
+
+main .worldOfSport-fashion{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+.supportwrapper{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.contentwwaper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.imagrag{
+    overflow: hidden;
+}
+.imagrag img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+.fornewsconns{
+    flex-direction: column;
+    display: flex;
+    gap: .6em;
+    padding: .8em;
+    text-align: left;
+    justify-content: center;
+}
+.fornewsconns h2{
+    font-family: "Alegreya", sans-serif;
+    font-size: 1.2em;
+    color: var(--darkblue-color);
+}
+.fornewsconns h5{
+    font-family: "Alegreya", sans-serif;
+    font-size: 11px;
+    color:var(--darkblue-color);
+}
+.fornewsconns .poststatus{
+    color: rgb(27, 26, 26);
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+}
+
+.ForFashion{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.trike{
+    width: 100%;
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    margin-bottom: .8em;
+}
+.trike .Alligience1{
+    width: 100%;
+    overflow: hidden;
+}
+.trike .Alligience1 img{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.trike .Alligience2 h2{
+    font-family: "Alegreya", sans-serif;
+    font-size: 1em;
+    color: rgb(27, 26, 26);
+}
+.trike .Alligience2 h5{
+    font-family: "Alegreya", sans-serif;
+    font-size: 11px;
+    color: var(--darkblue-color);
 }

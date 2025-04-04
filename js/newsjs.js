@@ -22,21 +22,7 @@ selectorAll = (d) => {
 }
 const mainContainer = selector('main')
 const NavChildren = selectorAll('.navstyle ul li a')
-// const mainImage = selector('.main-news img')
-// const categoryUnit = selector('.contenttag .hellow')
-// const title1 = selector('.titless')
-// const AboutAuthor = selector('.Authourdetails')
-// const sideNewsContainer = selector('.side-news')
-// const slideEffectNews = selector('.indicator')
-// const MaincontentAppender = selector('.bearer')
-// const troubleContainer = selector('.troubleContainer')
-// const secondflow = selector('.continuw')
-// secondflow.innerHTML = '';
-// troubleContainer.innerHTML = '';
-// smallNewtwo.innerHTML = '';
-// MaincontentAppender.innerHTML = '';
-// sideNewsContainer.innerHTML = '';
-////////////////////////////////////////////////////
+
 const topnotch = document.createElement('div')
 topnotch.className = 'topnotch';
 
@@ -78,14 +64,19 @@ continuw.className = 'continuw';
 const forcontinuw = document.createElement('div')
 forcontinuw.style.flexDirection = 'column';
 ///////////////////////////////////////////////////
+                // FOR WORLD NEWS
+const worldNewsonly = document.createElement('div')
+worldNewsonly.className = 'worldNewsonly';
+
+const worldOfSport_fashion = document.createElement('div')
+worldOfSport_fashion.className = 'worldOfSport-fashion'
+/////////////////////////////////////////////////
 const ImagePlaceholder = 'assets/placeholder-600x317.gif';
 
 function NavigationLink(){
     document.addEventListener('DOMContentLoaded', ()=>{
-
-
         NavChildren.forEach((Numb, indexc)=>{
-            Numb.onclick = function(){
+            Numb.onclick = async function(){
                let nass = document.querySelector('.nass');
                 if(nass){
                     nass.classList.remove('nass');
@@ -96,21 +87,253 @@ function NavigationLink(){
                     case 'home':
                         location.reload()
                     break;
+                    
                     case 'news':
-                        mainContainer.innerHTML = `
-                            <h1 class="Newsh1">News</h1>
-                            <div class="secondMainMan">
-                                <div class="addver">
-                                    <img src="" alt=""/>
-                                </div>
+                            ///////////////////////////////////////////
+                            mainContainer.innerHTML = `
+                            <div class="loading-spinne">
+                                <div class="spinner"></div>
+                                <p>Loading news...</p>
                             </div>
                         `;
+                        try {
+                            
+                            ////////////////////////////////////////////////
+                            const [worldRes, sportsRes, fashionRes] = await Promise.all([
+                                fetch(worldNewsURL),
+                                fetch(sportsNewsURL),
+                                fetch(fashionNewsURL)
+                            ]);
+                            const worldNewsData = await worldRes.json();
+                            const sportsNewsData = await sportsRes.json();
+                            const fashionNewsData = await fashionRes.json();
+                            mainContainer.innerHTML = '';
+                            const worldnewsObj = worldNewsData.articles.map(article =>({
+                                title: article.title,
+                                url: article.url,
+                                content: article.content,
+                                description: article.description || '',
+                                image: article.urlToImage || ImagePlaceholder ,
+                                source: article.source.name,
+                                author: article.author || 'Unknown Author',
+                                category:article.category || 'GENERAL',
+                                publishedAt: article.publishedAt
+                            })) || [];
+            
+                            const sportnewsObj = sportsNewsData.articles.map(article =>({
+                                title: article.title,
+                                content: article.content,
+                                url: article.url,
+                                description: article.description || '',
+                                image: article.urlToImage || ImagePlaceholder,
+                                source: article.source.name,
+                                author: article.author || 'Unknown Author',
+                                category:article.category || 'SPORT',
+                                publishedAt: article.publishedAt
+                            })) || [];
+            
+                            const fashionnewObj = fashionNewsData.articles.map(article =>({
+                                title: article.title,
+                                content: article.content,
+                                url: article.url,
+                                description: article.description || '',
+                                image: article.urlToImage || ImagePlaceholder,
+                                source: article.source.name,
+                                author: article.author || 'Unknown Author',
+                                category:article.category || 'FASHION',
+                                publishedAt: article.publishedAt
+                            })) || [];
+
+                            const Newsh1 = document.createElement('h1')
+                            Newsh1.className = 'Newsh1';
+                            Newsh1.innerText = 'News';
+                            ////////////////////////////////////////////
+                            const secondMainMan = document.createElement('div')
+                            secondMainMan.className = 'secondMainMan';
+                            secondMainMan.innerHTML = `
+                                <div class="addver">
+                                    <h6>Advertisement</h6>
+                                    <img src="./assets/11206313772825155776.jpeg" alt="">
+                                </div>
+                            `;
+                            // localStorage.setItem('feedsback1', JSON.stringify(worldnewsObj))
+                            // localStorage.setItem('feedsback2', JSON.stringify(sportnewsObj))
+                            // localStorage.setItem('feedsback3', JSON.stringify(fashionnewObj))
+                            const forworldnewsh2 = document.createElement('h2')
+                            forworldnewsh2.className = 'forworldnewsh2';
+                            forworldnewsh2.innerText = 'Most Read!';
+                            ///////////////////////////////////////////////////////
+                            const worldnewFacts = worldnewsObj
+                            const WorldnewConsumtion1 = worldnewFacts.slice(0, 3);
+                            const santacomse1 = WorldnewConsumtion1[0].publishedAt.split("T")[0]
+                            const santacomse2 = WorldnewConsumtion1[1].publishedAt.split("T")[0]
+                            const santacomse3 = WorldnewConsumtion1[2].publishedAt.split("T")[0]
+                            const worldNewsonlywrapper = document.createElement('div')
+                            worldNewsonlywrapper.className = 'worldNewsonlywrapper';
+                            worldNewsonlywrapper.innerHTML = `
+                                <div class="wrappnewsMain">
+                                        <div class="seniorwrapper">
+
+                                            <div class="forimagenews">
+                                                <img src="${WorldnewConsumtion1[0].image}" alt="">
+                                                <div class="forimagenews-concs">
+                                                    <div class="peace-unto">
+                                                        <div class="softman">
+                                                            <h2>${WorldnewConsumtion1[0].title}</h2>
+                                                            <h5 class="Authourdetails">BY &nbsp;
+                                                                <span class="andwe">${WorldnewConsumtion1[0].author}</span>&nbsp;&nbsp;
+                                                                <i class="fa fa-clock"></i>&nbsp;
+                                                                <span>${santacomse1}/span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="fortextparagram">
+                                                <h2>${WorldnewConsumtion1[1].title}</h2>
+                                                <h5 class="Authourdetails">BY &nbsp;
+                                                    <span class="andwe">${WorldnewConsumtion1[1].author}</span>&nbsp;&nbsp;
+                                                    <i class="fa fa-clock"></i>&nbsp;
+                                                    <span>${santacomse2}</span>
+                                                </h5>
+                                                <p>${WorldnewConsumtion1[1].description}</p>
+                                            </div>
+
+                                            <div class="forimagenews">
+                                                <img src="${WorldnewConsumtion1[2].image}" alt="">
+                                                <div class="forimagenews-concs">
+                                                    <div class="peace-unto">
+                                                        <div class="softman">
+                                                            <h2>${WorldnewConsumtion1[2].title}</h2>
+                                                            <h5 class="Authourdetails">BY &nbsp;
+                                                                <span class="andwe">${WorldnewConsumtion1[2].author}</span>&nbsp;&nbsp;
+                                                                <i class="fa fa-clock"></i>&nbsp;
+                                                                <span>${santacomse3}</span>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                            `;
+                            ////////////////////////////////////////////////////////////
+                            const otherNewsworldnews = document.createElement('div')
+                            otherNewsworldnews.className = 'otherNewsworldnews';
+                            const otherNewsworldnews1 = document.createElement('div')
+                            otherNewsworldnews1.className = 'otherNewsworldnews1';
+                            const restofworldnews = worldnewFacts.slice(3)
+                            restofworldnews.forEach((them, tens)=>{
+                                const publictime = restofworldnews[tens].publishedAt.split("T")[0]
+                                const containersnewsworld = document.createElement('div')
+                                containersnewsworld.className = 'containersnewsworld';
+                                containersnewsworld.innerHTML = `
+                                    <div class="No-image">
+                                        <img src="${restofworldnews[tens].image}" alt="">
+                                    </div>
+                                    <div class="textonecs">
+                                        <h3>${restofworldnews[tens].title}</h3>
+                                        <h5 class="Authourdetails">BY &nbsp;
+                                            <span class="andwe">${restofworldnews[tens].author}</span>&nbsp;&nbsp;
+                                            <i class="fa fa-clock"></i>&nbsp;
+                                            <span>${publictime}</span>
+                                        </h5>
+                                    </div>
+                                `;
+                                otherNewsworldnews1.append(containersnewsworld)
+                            })
+                            const anotherAdvert = document.createElement('div');
+                            anotherAdvert.className = 'anotherAdvert';
+                            anotherAdvert.innerHTML = `<img src="./assets/Screenshot 2025-03-27 130807.jpg" alt="">`;
+                            otherNewsworldnews1.append(anotherAdvert)
+                            otherNewsworldnews.append(otherNewsworldnews1)
+                            worldNewsonly.append(forworldnewsh2, worldNewsonlywrapper, otherNewsworldnews)
+                            ////////////////////////////////////////////////////////////////////////////
+                            const fortoborns = document.createElement('div')
+                            fortoborns.className = 'fortoborns';
+                            fortoborns.innerHTML = `<h3 class="sporth3">SPORT</h3>`;
+                            
+                            const ForSport = document.createElement('div');
+                            ForSport.className = 'ForSport';
+                            const supportwrapper = document.createElement('div')
+                            supportwrapper.className = 'supportwrapper';
+
+                            const AllNews1 = sportnewsObj
+                            AllNews1.forEach((over, size)=>{
+                                const twek = AllNews1[size].publishedAt.split("T")[0]
+                                const contentwwaper = document.createElement('div')
+                                contentwwaper.className = 'contentwwaper';
+                                contentwwaper.innerHTML = `
+                                     <div class="imagrag">
+                                        <img src="${AllNews1[size].image}" alt="">
+                                    </div>
+                                    <div class="fornewsconns">
+                                        <h2>${AllNews1[size].title}</h2>
+                                        <p class="poststatus">${AllNews1[size].description}</p>
+                                        <h5>BY &nbsp;
+                                            <span class="loveq">${AllNews1[size].author}</span>&nbsp;&nbsp;
+                                            <I class="fa fa-clock"></I>&nbsp;
+                                            <span>${twek}</span>
+                                            <i class="fa fa-comment"></i>
+                                            <span>0</span>
+                                        </h5>
+                                    </div>
+                                `;
+                                ForSport.append(contentwwaper)
+                                if((size +1) % 5 === 0){
+                                    const Advertment = document.createElement('div')
+                                    Advertment.className = 'advertcontainer jjs';
+                                    Advertment.innerHTML = '<img src="./assets/ad_970x90.png" alt="">';
+                                    ForSport.append(Advertment)
+                                }
+                            })
+                            //////////////////////////////////////////////
+                            const ForFashion = document.createElement('div')
+                            ForFashion.className = 'ForFashion';
+
+                            const topmane = document.createElement('div')
+                            topmane.className = 'topmane';
+                            topmane.innerHTML = `
+                                <i class="fa fa-fire bvb"></i>
+                                <h3>Fashion & Entertainment</h3>
+                            `;
+
+                            const newmaningame = document.createElement('div')
+
+                            const FashionMode = fashionnewObj
+                            FashionMode.forEach((echo, bed)=>{
+                                const solder = FashionMode[bed].publishedAt.split("T")[0]
+                                const trike = document.createElement('div')
+                                trike.className = 'trike';
+                                trike.innerHTML = `
+                                    <div class="Alligience1">
+                                         <img src="${FashionMode[bed].image}" alt="">
+                                     </div>
+                                     <div class="Alligience2">
+                                         <h2>${FashionMode[bed].title}</h2>
+                                         <h5>BY &nbsp;
+                                             <span class="loveq">${FashionMode[bed].author}</span>&nbsp;&nbsp;
+                                             <I class="fa fa-clock"></I>&nbsp;
+                                             <span>${solder}</span>
+                                         </h5>
+                                     </div>
+                                `;
+                                newmaningame.append(trike)
+                            })
+
+                            ForFashion.append(topmane, newmaningame)
+
+                            worldOfSport_fashion.append(ForSport, ForFashion)
+                             mainContainer.append(Newsh1, secondMainMan, worldNewsonly, fortoborns, worldOfSport_fashion)
+                        } catch (error) {
+                            console.log(error)
+                        }
+                        
                     break;
-                
-                    case 'fashion':
-                        mainContainer.innerHTML = `<h1> Fashion is coming Soon</h1>`
-                    break;
-                
+                    
                     case 'weather':
                         mainContainer.innerHTML = `<h1> Weather is coming Soon</h1>`
                     break;
@@ -121,11 +344,9 @@ function NavigationLink(){
                 }
             }
         })
-        // TopFeedsContents()
+        TopFeedsContents()
         NavChildren[0].classList.add('nass')
-        
     })
-    
 }
 NavigationLink()
 
@@ -151,7 +372,7 @@ async function TopFeedsContents(){
                     title: article.title,
                     url: article.url,
                     content: article.content,
-                    description: article.description,
+                    description: article.description || '',
                     image: article.urlToImage || ImagePlaceholder ,
                     source: article.source.name,
                     author: article.author || 'Unknown Author',
@@ -163,7 +384,7 @@ async function TopFeedsContents(){
                     title: article.title,
                     content: article.content,
                     url: article.url,
-                    description: article.description,
+                    description: article.description || '',
                     image: article.urlToImage || ImagePlaceholder,
                     source: article.source.name,
                     author: article.author || 'Unknown Author',
@@ -175,7 +396,7 @@ async function TopFeedsContents(){
                     title: article.title,
                     content: article.content,
                     url: article.url,
-                    description: article.description,
+                    description: article.description || '',
                     image: article.urlToImage || ImagePlaceholder,
                     source: article.source.name,
                     author: article.author || 'Unknown Author',
@@ -205,8 +426,6 @@ async function TopFeedsContents(){
                 }, 3000);
                 
              
-                // liveNewsSlider(AllNews)
-                // console.log(AllNews)
                 //////////////////////////////To The Big Man/////////////////////////////////
                 const MainNews = AllNews.slice(0, 1)
                 const dataonly = MainNews[0].publishedAt.split("T")[0]
@@ -229,19 +448,6 @@ async function TopFeedsContents(){
                 </div>
                  `;
 
-
-                // console.log('MainNews',MainNews)
-                    // mainImage.src = MainNews[0].image
-                    // categoryUnit.innerHTML = MainNews[0].category
-                    // title1.innerHTML = MainNews[0].title
-                    // const dataonly = MainNews[0].publishedAt.split("T")[0]
-                    // mainurl.setAttribute('href', MainNews[0].url)
-                    // AboutAuthor.innerHTML = `
-                    //     BY &nbsp;
-                    //     <span class="and">${MainNews[0].author}</span>&nbsp;&nbsp;
-                    //     <I class="fa fa-clock"></I>&nbsp;
-                    //     <span>${dataonly}</span>
-                    // `;
                 ////////////////////////////////////Dont Touch//////////////////////////////////////
         
                 //////////////////////////////////For the four brothers Fuck Off///////////////////////////////////////
@@ -440,43 +646,15 @@ async function TopFeedsContents(){
                     </div>
                 `;
 
-
                 secondparentElement.append(topmane, smallnewContain, troubleContainer, connetnet, continuw)
                 editorspicksworks.append(firstparentElement, secondparentElement)
                return mainContainer.append(topnotch, nmmn, editorspicksworks, advertcontainer3)
 
-
-                // mainContainer.append()
-                //////////////////////////////////////////////////////////////////////
-                // const few = AllNews.slice(52)
-                // console.log('few',few)
             } catch(error) {
                 console.log(error)
             }
     
 }
-
-// async function TestApi(url) {
-//     try {
-//         const response = await fetch(url);
-
-//         // Check if response is JSON before parsing
-        // const contentType = response.headers.get("content-type");
-        // if (!contentType || !contentType.includes("application/json")) {
-        //     throw new Error("Invalid JSON response. Check API URL or Key.");
-        // }
-
-//         const data = await response.json(); 
-//         console.log("API Response:", data); 
-
-//         return data;
-//     } catch (error) {
-//         console.error("Error fetching news:", error.message);
-//         return null; // Prevents crashing if API fails
-//     }
-// }
-
-// TestApi(sportsNewsURL);
 
 async function fetchVideoNews(topic) {
     const apiUrl = `https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(topic)}&filter=video`;
@@ -515,3 +693,4 @@ function displayVideos(videos) {
 // fetchVideoNews("sports news");
 // fetchVideoNews("fashion news");
 // fetchVideoNews("world news");
+// header .smith_name .smith_name_contents .wantmore_content h3
