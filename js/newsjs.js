@@ -344,11 +344,11 @@ function NavigationLink(){
                 }
             }
         })
-        TopFeedsContents()
+        // TopFeedsContents()
         NavChildren[0].classList.add('nass')
     })
 }
-NavigationLink()
+// NavigationLink()
 
 async function TopFeedsContents(){
             mainContainer.innerHTML = `
@@ -693,4 +693,16 @@ function displayVideos(videos) {
 // fetchVideoNews("sports news");
 // fetchVideoNews("fashion news");
 // fetchVideoNews("world news");
-// header .smith_name .smith_name_contents .wantmore_content h3
+function DateFunction(){
+ 
+    const DateElement = selector('header .smith_name .smith_name_contents .wantmore_content h3')
+    const newDays = new Date()
+    const year = newDays.getFullYear()
+    const months = newDays.getMonth()
+    const date = newDays.getDate()
+    const days = newDays.getDay()
+    const MnthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    const DaysArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    DateElement.innerHTML = DaysArray[days] + ',  ' + MnthsArray[months] +" " + date + ", " + year   
+}
+DateFunction()
