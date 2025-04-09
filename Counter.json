@@ -1,0 +1,82 @@
+[
+{
+    "country" : "Afghanistan",
+    "alpha2" : "AF",
+    "alpha3" : "AFG",
+    "numeric" : 4,
+    "latitude" : 33,
+    "longitude" : 65
+  },
+{
+    "country" : "Albania",
+    "alpha2" : "AL",
+    "alpha3" : "ALB",
+    "numeric" : 8,
+    "latitude" : 41,
+    "longitude" : 20
+  },
+{
+    "country" : "Algeria",
+    "alpha2" : "DZ",
+    "alpha3" : "DZA",
+    "numeric" : 12,
+    "latitude" : 28,
+    "longitude" : 3
+  },
+{
+    "country" : "American Samoa",
+    "alpha2" : "AS",
+    "alpha3" : "ASM",
+    "numeric" : 16,
+    "latitude" : -14.3333,
+    "longitude" : -170
+  },
+{
+    "country" : "Andorra",
+    "alpha2" : "AD",
+    "alpha3" : "AND",
+    "numeric" : 20,
+    "latitude" : 42.5,
+    "longitude" : 1.6
+  },
+{
+    "country" : "Angola",
+    "alpha2" : "AO",
+    "alpha3" : "AGO",
+    "numeric" : 24,
+    "latitude" : -12.5,
+    "longitude" : 18.5
+  },
+{
+    "country" : "Antarctica",
+    "alpha2" : "AQ",
+    "alpha3" : "ATA",
+    "numeric" : 10,
+    "latitude" : -90,
+    "longitude" : 0
+  },
+{
+    "country" : "Antigua and Barbuda",
+    "alpha2" : "AG",
+    "alpha3" : "ATG",
+    "numeric" : 28,
+    "latitude" : 17.05,
+    "longitude" : -61.8
+  },
+{
+    "country" : "Argentina",
+    "alpha2" : "AR",
+    "alpha3" : "ARG",
+    "numeric" : 32,
+    "latitude" : -34,
+    "longitude" : -64
+  },
+{
+    "country" : "Armenia",
+    "alpha2" : "AM",
+    "alpha3" : "ARM",
+    "numeric" : 51,
+    "latitude" : 40,
+    "longitude" : 45
+}
+]

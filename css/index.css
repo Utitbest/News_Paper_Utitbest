@@ -31,10 +31,7 @@ body{
 h5{
     font-family: "Alegreya", sans-serif !important;
 }
-/* #ParentContains{
-    position: relative;
-} */
- .smith_name{
+.smith_name{
     width: 100%;
     display: flex;
     padding: 20px;
@@ -1166,4 +1163,176 @@ main .worldOfSport-fashion{
     font-family: "Alegreya", sans-serif;
     font-size: 11px;
     color: var(--darkblue-color);
+}
+.Allweather{
+    width: 100%;
+    height: 300px;
+    display: flex;
+    position: relative;
+}
+.Allweather video{
+    width: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.Allweather > div{
+    position: absolute;
+    display: flex;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #5f61618a;
+}
+.towrappeBith{
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    padding: .7em;
+}
+.firstdiv{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.firstdiv > div{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--grey-color);
+    border-radius: 10px;
+    overflow: hidden;
+    height: 40px;
+}
+.firstdiv > div > input{
+    background: none;
+    outline: none;
+    border: none;
+    flex: 1;
+    padding: 1em ;
+    color: gray;
+    font-family: 'Alegreya', sans-serif;
+}
+.searchbuds{
+    height: 100%;
+    width: 40px;
+    background-color: var(--darkblue-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.kkd{
+    color: var(--grey-color);
+}
+.seconddiv{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .7em;
+}
+.ApartMent1{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.ApartMent1 span{
+    font-weight: 600;
+    font-family: "Alegreya", sans-serif;
+    font-size: 17px;
+    color: var(--grey-color);
+    text-shadow: 2px 1px 1px #5b5b5b;
+    display: flex;
+    align-items: center;
+    gap: .6em;
+}
+.ApartMent1 span p{
+    color: var(--yellow-color);
+    font-weight: 600;
+    font-family: "Alegreya", sans-serif;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+}
+.h1CountryName{
+    display: flex;
+    align-items: center;
+}
+.h1CountryName span{
+    color: var(--grey-color);
+    font-family: "Alegreya", sans-serif;
+    text-shadow: 2px 1px 1px #5b5b5b;
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.h1CountryName utitbest{
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--yellow-color);
+}
+.ApartMent2{
+    align-items: start;
+    display: flex;
+}
+.ApartMent2 h1{
+    font-size: 8em;
+    outline: none;
+    border: none;
+    transform: rotate(20deg);
+}
+.otherCountry{
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+.disciples{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.contentwapp{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: .8em;
+    position: relative;
+    padding: 1em;
+    justify-content: center;
+}
+.country-card{
+    /* height: auto; */
+    /* width: 100px; */
+    padding: .4em .4em;
+    display: flex;
+    border-radius: .2em;
+    overflow: hidden;
+    background-color: #3498db;
+}
+.country-card > div{
+    display: flex;
+    flex-direction: column;
+}
+.ButtonForMore{
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    font-weight: 600;
+    padding:.4em .7em;
+    margin: auto;
+    color: var(--grey-color);
+    outline: none;
+    border: none;
+    border-radius: .1em;
+    background-color: var(--yellow-color);
+    cursor: pointer;
 }
