@@ -1355,8 +1355,26 @@ main .worldOfSport-fashion{
     border-top-color: #3498db;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
-  }
-  
+}
+.advertcontainer3{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+}
+.advertcontainer3 .jecues{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.advertcontainer3 .jecues img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
 @keyframes spin {
     to { transform: rotate(360deg); }
 }

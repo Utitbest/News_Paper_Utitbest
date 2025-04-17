@@ -654,7 +654,7 @@ async function TopFeedsContents(){
                 const advertcontainer3 = document.createElement('div')
                 advertcontainer3.className = 'advertcontainer3'
                 advertcontainer3.innerHTML = `
-                    <div>
+                    <div class="jecues">
                         <img src="./assets/Screenshot 2025-03-27 130807.jpg" alt="">
                     </div>
                 `;
@@ -954,14 +954,10 @@ async function displayCountriesWithWeather() {
 }
 
 function clearWeatherView() {
-    if(mainContainer.childElementCount > 0) {
+    if(mainContainer.childElementCount > 0 || mainContainer.innerHTML !== '') {
         alert('Main container has child elements');
-        mainContainer.innerHTML = '';  // Clear content
+        mainContainer.innerHTML = ''; 
     }
-    // if(mainContainer.innerHTML !== ''){
-    //     alert('maincontainer is bot empty')
-    //     mainContainer.innerHTML = ''
-    // }
 }
 
 function DateFunction(){
