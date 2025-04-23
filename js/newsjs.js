@@ -366,19 +366,19 @@ function NavigationLink(){
 
          //////////////////For home tabs///////////////////////
 
-        // fetch(`tabs/${'home'}.html`)
-        // .then(response => response.text())
-        // .then(results =>{
-        //     mainContainer.innerHTML = results;
-        //     const initFn = window[`init_home`];
-        //         if (typeof initFn === "function") {
-        //             initFn(); 
-        //         }
-        // })
-        // .catch(error =>{
-        //     console.error(error)
-        // })
-        // NavChildren[0].classList.add('nass')
+        fetch(`tabs/${'home'}.html`)
+        .then(response => response.text())
+        .then(results =>{
+            mainContainer.innerHTML = results;
+            const initFn = window[`init_home`];
+                if (typeof initFn === "function") {
+                    initFn(); 
+                }
+        })
+        .catch(error =>{
+            console.error(error)
+        })
+        NavChildren[0].classList.add('nass')
 
 
         //////////////////For news tabs///////////////////////
@@ -399,19 +399,19 @@ function NavigationLink(){
 
         //////////////////For weather tabs///////////////////////
 
-        fetch(`tabs/${'weather'}.html`)
-        .then(response => response.text())
-        .then(results =>{
-            mainContainer.innerHTML = results;
-            const initweath = window[`init_weather`];
-                if (typeof initweath === "function") {
-                    initweath(); 
-                }
-        })
-        .catch(error =>{
-            console.error(error)
-        })
-        NavChildren[2].classList.add('nass')
+        // fetch(`tabs/${'weather'}.html`)
+        // .then(response => response.text())
+        // .then(results =>{
+        //     mainContainer.innerHTML = results;
+        //     const initweath = window[`init_weather`];
+        //         if (typeof initweath === "function") {
+        //             initweath(); 
+        //         }
+        // })
+        // .catch(error =>{
+        //     console.error(error)
+        // })
+        // NavChildren[2].classList.add('nass')
 
        
     })
