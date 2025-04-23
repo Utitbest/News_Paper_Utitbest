@@ -1,4 +1,10 @@
 
+window.addEventListener("load", function () {
+    setTimeout(() => {
+        document.getElementById("Loadinging").classList.add("pre-loader");
+    }, 500); 
+});
+
 ///////////////////////////////////// MOVEMENT RESTRICTED////////////////////////////////////////////////////////////////////////
 const graceAkpanAPIkey_GuardianApi = '4569e36f-573a-4744-92a6-a49888e1601d';                                                   //
 const UtitbestAPIkey_GuardianApi = '3eaf709c-9088-4519-a803-a1730b36f5a5';                                                     //
@@ -80,6 +86,7 @@ const ImagePlaceholder = 'assets/placeholder-600x317.gif';
 // let isWeatherViewActive = true; // NEW FLAG
 // let batchTimeout = null; // Timeout handler
 
+const seletingelement = document.querySelector('.contenttag')
 
 
 function NavigationLink(){
@@ -101,7 +108,7 @@ function NavigationLink(){
                         clearWeatherView()
                             ///////////////////////////////////////////
                             mainContainer.innerHTML = `
-                            <div class="loading-spinne">
+                            <div class="loading-spinner">
                                 <div class="spinner"></div>
                                 <p>Loading news...</p>
                             </div>
@@ -356,244 +363,236 @@ function NavigationLink(){
                 }
             }
         })
-        TopFeedsContents()
-        NavChildren[0].classList.add('nass')
+
+         //////////////////For home tabs///////////////////////
+
+        // fetch(`tabs/${'home'}.html`)
+        // .then(response => response.text())
+        // .then(results =>{
+        //     mainContainer.innerHTML = results;
+        //     const initFn = window[`init_home`];
+        //         if (typeof initFn === "function") {
+        //             initFn(); 
+        //         }
+        // })
+        // .catch(error =>{
+        //     console.error(error)
+        // })
+        // NavChildren[0].classList.add('nass')
+
+
+        //////////////////For news tabs///////////////////////
+
+        // fetch(`tabs/${'news'}.html`)
+        // .then(response => response.text())
+        // .then(results =>{
+        //     mainContainer.innerHTML = results;
+        //     const initNews = window[`init_news`];
+        //         if (typeof initNews === "function") {
+        //             initNews(); 
+        //         }
+        // })
+        // .catch(error =>{
+        //     console.error(error)
+        // })
+        // NavChildren[1].classList.add('nass')
+
+        //////////////////For weather tabs///////////////////////
+
+        fetch(`tabs/${'weather'}.html`)
+        .then(response => response.text())
+        .then(results =>{
+            mainContainer.innerHTML = results;
+            const initweath = window[`init_weather`];
+                if (typeof initweath === "function") {
+                    initweath(); 
+                }
+        })
+        .catch(error =>{
+            console.error(error)
+        })
+        NavChildren[2].classList.add('nass')
+
+       
     })
 }
 NavigationLink()
 
+function init_home() {
+    TopFeedsContents();
+}
 async function TopFeedsContents(){
-            mainContainer.innerHTML = `
-                <div class="loading-spinne">
-                    <div class="spinner"></div>
-                    <p>Loading news...</p>
+    try {
+        const [worldRes, sportsRes, fashionRes] = await Promise.all([
+            fetch(worldNewsURL),
+            fetch(sportsNewsURL),
+            fetch(fashionNewsURL)
+        ]);
+        const worldNewsData = await worldRes.json();
+        const sportsNewsData = await sportsRes.json();
+        const fashionNewsData = await fashionRes.json();
+
+        
+        const worldnewsObj = worldNewsData.articles.map(article =>({
+            title: article.title,
+            url: article.url,
+            content: article.content,
+            description: article.description || '',
+            image: article.urlToImage || ImagePlaceholder ,
+            source: article.source.name,
+            author: article.author || 'Unknown Author',
+            category:article.category || 'GENERAL',
+            publishedAt: article.publishedAt
+        })) || [];
+                    
+        const sportnewsObj = sportsNewsData.articles.map(article =>({
+            title: article.title,
+            content: article.content,
+            url: article.url,
+            description: article.description || '',
+            image: article.urlToImage || ImagePlaceholder,
+            source: article.source.name,
+            author: article.author || 'Unknown Author',
+            category:article.category || 'TECHNOLOGY',
+            publishedAt: article.publishedAt
+        })) || [];
+                    
+        const fashionnewObj = fashionNewsData.articles.map(article =>({
+            title: article.title,
+            content: article.content,
+            url: article.url,
+            description: article.description || '',
+            image: article.urlToImage || ImagePlaceholder,
+            source: article.source.name,
+            author: article.author || 'Unknown Author',
+            category:article.category || 'FASHION',
+            publishedAt: article.publishedAt
+        })) || [];
+
+        const AllNews = [...worldnewsObj, ...sportnewsObj, ...fashionnewObj]
+        
+        const SlideShow = selector('.indicator')
+        let startPos = 0
+        let Slide_Timer = setInterval(()=>{
+            if(startPos >= AllNews.length){
+                startPos = 0
+            }
+
+            SlideShow.innerHTML = AllNews[startPos].title;
+            SlideShow.setAttribute('href', AllNews[startPos].url)
+            startPos++;
+        }, 3000)
+
+        const mainNews = selector('.main-news')
+        const DateSplit = AllNews[0].publishedAt.split("T")[0]
+        mainNews.setAttribute('href', AllNews[0].url)
+        mainNews.innerHTML = `
+            <img src="${AllNews[0].image}" alt="">
+            <div class="ontoptrenn">
+                <div class="contenttag">
+                    <div class="hellow">${AllNews[0].category}</div>
+                    <h4 class="titless">${AllNews[0].title}</h4>
+                    <h5 class="Authourdetails">BY &nbsp;
+                        <span class="and">${AllNews[0].author}</span>&nbsp;&nbsp;
+                        <I class="fa fa-clock"></I>&nbsp;
+                        <span>${DateSplit}</span>
+                    </h5>
+                </div>
+            </div>
+        `;
+
+
+        const sidechick = selector('.side-news')
+        const Second_looping = AllNews.slice(1, 5)
+        Second_looping.forEach((second, index) =>{
+            const contaner = document.createElement('a')
+            const weed = Second_looping[index].publishedAt.split("T")[0]
+            contaner.className = 'fourplate';
+            contaner.setAttribute('href', Second_looping[index].url)
+            contaner.innerHTML = `
+                <img src="${Second_looping[index].image}" alt="" class="topfeedsImage">
+                <div class="sidenewscontent">
+                    <div class="absoluteside-content">
+                        <div style="position: relative; display:flex;">
+                            <div class="absoluteeee">${Second_looping[index].category}</div>
+                        <h4>${Second_looping[index].title}</h4>
+                        <h5>BY &nbsp;
+                            <span>${Second_looping[index].author}</span>&nbsp;&nbsp;
+                            <I class="fa fa-clock"></I>&nbsp;
+                            <span>${weed}</span>
+                        </h5>
+                        </div>
+                            
+                    </div>
                 </div>
             `;
-            try {
-                const [worldRes, sportsRes, fashionRes] = await Promise.all([
-                    fetch(worldNewsURL),
-                    fetch(sportsNewsURL),
-                    fetch(fashionNewsURL)
-                ]);
-                const worldNewsData = await worldRes.json();
-                const sportsNewsData = await sportsRes.json();
-                const fashionNewsData = await fashionRes.json();
+            sidechick.append(contaner)
+        })
 
-                mainContainer.innerHTML = '';
-
-                const worldnewsObj = worldNewsData.articles.map(article =>({
-                    title: article.title,
-                    url: article.url,
-                    content: article.content,
-                    description: article.description || '',
-                    image: article.urlToImage || ImagePlaceholder ,
-                    source: article.source.name,
-                    author: article.author || 'Unknown Author',
-                    category:article.category || 'GENERAL',
-                    publishedAt: article.publishedAt
-                })) || [];
-        
-                const sportnewsObj = sportsNewsData.articles.map(article =>({
-                    title: article.title,
-                    content: article.content,
-                    url: article.url,
-                    description: article.description || '',
-                    image: article.urlToImage || ImagePlaceholder,
-                    source: article.source.name,
-                    author: article.author || 'Unknown Author',
-                    category:article.category || 'TECHNOLOGY',
-                    publishedAt: article.publishedAt
-                })) || [];
-        
-                const fashionnewObj = fashionNewsData.articles.map(article =>({
-                    title: article.title,
-                    content: article.content,
-                    url: article.url,
-                    description: article.description || '',
-                    image: article.urlToImage || ImagePlaceholder,
-                    source: article.source.name,
-                    author: article.author || 'Unknown Author',
-                    category:article.category || 'FASHION',
-                    publishedAt: article.publishedAt
-                })) || [];
-                const AllNews = [...worldnewsObj, ...sportnewsObj, ...fashionnewObj]
-                localStorage.setItem('feedsback', JSON.stringify(AllNews))
-        
-                // const AllNews = JSON.parse(localStorage.getItem('feedsback'))
-                 
-                let startIndex = 0;
-                setInterval(() => {
-                    if(startIndex >= AllNews.length) {
-                        startIndex = 0; 
-                    }
-                nmmn.className = 'nmmn';
-                nmmn.innerHTML = `
-                <div class="seconwrman">
-                    <h4>Live News</h4>
-                    <a href="${AllNews[startIndex].url}" class="indicator">
-                        ${AllNews[startIndex].title}
-                    </a>
+        const bearer = selector('.bearer')
+        const Third_looping = AllNews.slice(5, 33)
+        Third_looping.forEach((product, Numbs)=>{
+            const dte = Third_looping[Numbs].publishedAt.split("T")[0]
+            const matter = document.createElement('a')
+            matter.className = 'matters';
+            matter.setAttribute('href', Third_looping[Numbs].url);
+            matter.innerHTML = `
+            <div class="forimagestake">
+                    <img src="${Third_looping[Numbs].image}" alt="">
+                    <div class="ontopsma">${Third_looping[Numbs].category}</div>
                 </div>
-                `;
-                    startIndex++; 
-                }, 3000);
-                
-             
-                //////////////////////////////To The Big Man/////////////////////////////////
-                const MainNews = AllNews.slice(0, 1)
-                const dataonly = MainNews[0].publishedAt.split("T")[0]
-
-                const mainurl = document.createElement('a')
-                 mainurl.setAttribute('href', MainNews[0].url)
-                 mainurl.className = 'main-news';
-                 mainurl.innerHTML = `
-                <img src="${MainNews[0].image}" alt="">
-                <div class="ontoptrenn">
-                    <div class="contenttag">
-                        <div class="hellow">${MainNews[0].category}</div>
-                        <h4 class="titless">${MainNews[0].title}</h4>
-                        <h5 class="Authourdetails">BY &nbsp;
-                            <span class="and">${MainNews[0].author}</span>&nbsp;&nbsp;
-                            <I class="fa fa-clock"></I>&nbsp;
-                            <span>${dataonly}</span>
-                        </h5>
-                    </div>
+                <div class="hearder">
+                    <h2>${Third_looping[Numbs].title}</h2>
+                    <h5>BY &nbsp;
+                        <span class="loveq">${Third_looping[Numbs].author}</span>&nbsp;&nbsp;
+                        <i class="fa fa-clock"></i>&nbsp;
+                        <span>${dte}</span>
+                        <i class="fa fa-comment"></i>
+                        <span>0</span>
+                    </h5>
+                    <p class="poststatus">${Third_looping[Numbs].description}</p>
                 </div>
-                 `;
-
-                ////////////////////////////////////Dont Touch//////////////////////////////////////
-        
-                //////////////////////////////////For the four brothers Fuck Off///////////////////////////////////////
-                const FourBrother = AllNews.slice(1, 5)
-                // console.log('FourBrother',FourBrother)
-                FourBrother.forEach((element, indexx) => {
-                    const sidecontainer = document.createElement('a')
-                    sidecontainer.className = 'fourplate';
-                    sidecontainer.setAttribute('href', FourBrother[indexx].url)
-                    const formatDate = FourBrother[indexx].publishedAt.split("T")[0]
-                    sidecontainer.innerHTML = `
-                        <img src="${FourBrother[indexx].image}" alt="">
-                            <div class="sidenewscontent">
-                                <div class="absoluteside-content">
-                                    <div style="position: relative; display:flex;">
-                                        <div class="absoluteeee">${FourBrother[indexx].category}</div>
-                                    <h4>${FourBrother[indexx].title}</h4>
-                                    <h5>BY &nbsp;
-                                        <span>${FourBrother[indexx].author}</span>&nbsp;&nbsp;
-                                        <I class="fa fa-clock"></I>&nbsp;
-                                        <span>${formatDate}</span>
-                                    </h5>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                    `;
-                    side_news.append(sidecontainer)
-                });
-                topnotch.append(mainurl, side_news)
-                // remaining to append topnotch to MaincontentElement
+            `;
+            if((Numbs +1)% 5 === 0){
+                const addvert = document.createElement('div')
+                addvert.className = 'advertcontainer';
+                addvert.innerHTML = `
+                    <img src="./assets/ad_970x90.png" alt="">
+                `
+                bearer.append(addvert)
+            }
+            bearer.append(matter)
+        })
 
 
-                ////////////////////////////////////Dont Touch////////////////////////////////////////////
-                const MainBodyFeed = AllNews.slice(5, 30)
-                // console.log('MainBodyFeed', MainBodyFeed)
-        
-                MainBodyFeed.forEach((element, sort) => {
-                    const dateform = MainBodyFeed[sort].publishedAt.split('T')[0]
-                    const MaincontentElement = document.createElement('a')
-                    MaincontentElement.className = 'matters';
-                    MaincontentElement.setAttribute('href', MainBodyFeed[sort].url)
-                    MaincontentElement.innerHTML = `
-                        <div class="forimagestake">
-                                    <img src="${MainBodyFeed[sort].image}" alt="">
-                                    <div class="ontopsma">${MainBodyFeed[sort].category}</div>
-                                </div>
-                                <div class="hearder">
-                                    <h2>${MainBodyFeed[sort].title}</h2>
-                                    <h5>BY &nbsp;
-                                        <span class="loveq">${MainBodyFeed[sort].author}</span>&nbsp;&nbsp;
-                                        <I class="fa fa-clock"></I>&nbsp;
-                                        <span>${dateform}</span>
-                                        <i class="fa fa-comment"></i>
-                                        <span>0</span>
-                                    </h5>
-                                    <p class="poststatus">
-                                        ${MainBodyFeed[sort].description}
-                                    </p>
-                                    
-                                </div>
-                    `;
-                    bearer.append(MaincontentElement)
-                    if((sort + 1) % 5 === 0){
-                        const Advertment = document.createElement('div')
-                        Advertment.className = 'advertcontainer';
-                        Advertment.innerHTML = '<img src="./assets/ad_970x90.png" alt="">';
-                        bearer.append(Advertment)
-                    }
-                });
-                firstparentElement.append(bearer)
-                ///////////////////////////////////Plenty content Area///////////////////////////////////////////
-                
-                const topmane = document.createElement('div')
-                topmane.className = 'topmane'
-                topmane.innerHTML = `
-                    <i class="fa fa-fire bvb"></i>
-                    <h3>Fashion & Entertainment</h3>
-                `;
-
-                const remaiin = AllNews.slice(30, 35)
-                // console.log('remaiin',remaiin)
-                remaiin.forEach((remain, No) =>{
-                    const perfecto = remaiin[No].publishedAt.split("T")[0]
-                   const newsmallElemnet = document.createElement('a')
-                   newsmallElemnet.className = 'smallnew';
-                   newsmallElemnet.setAttribute('href', remaiin[No].url)
-                   newsmallElemnet.innerHTML = `
+        const wrapperForsmall = selector('.wrapperForsmall')
+        const Fourth_looping = AllNews.slice(33)
+        Fourth_looping.forEach((con, NOo)=>{
+            const dte1 = Fourth_looping[NOo].publishedAt.split("T")[0]
+            const smallnewContain = document.createElement('a')
+            smallnewContain.className = 'smallnewContain';
+            smallnewContain.setAttribute('href', Fourth_looping[NOo].url)
+            smallnewContain.innerHTML = `
+                <div class="smallnew">
                     <div class="foke">
-                        <img src="${remaiin[No].image}" alt="">
-                        <div class="aboveall">${remaiin[No].category}</div>
+                        <img src="${Fourth_looping[NOo].image}" alt="">
+                        <div class="aboveall">${Fourth_looping[NOo].category}</div>
                     </div>
                     <div class="wordsnote">
-                        <p class="ww-3">${remaiin[No].title}</p>
+                        <p class="ww-3">${Fourth_looping[NOo].title}</p>
                         <h5>
                             <i class="fa fa-clock"></i>
-                            <span>${perfecto}</span>
+                            <span>${dte1}</span>
                             <i class="fa fa-comment"></i>
                             <span>0</span>
                         </h5>
                     </div>
-                   `;
-                   divNoclass.append(newsmallElemnet)
-                //    divNoclass.append(smallnewContain)
-                })
-                smallnewContain.append(divNoclass)
-                ////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        
-                const continuetion = AllNews.slice(35, 40)
-                    // console.log(continuetion)
-                continuetion.forEach((continu, sums) =>{
-                    const datform = continuetion[sums].publishedAt.split("T")[0]
-                    const sohigh = document.createElement('a')
-                    sohigh.className = 'troubledisv';
-                    sohigh.setAttribute('href', continuetion[sums].url);
-                    sohigh.innerHTML = `
-                        <div class="troubledisv-h1">
-                            <img src="${continuetion[sums].image}" alt="">
-                        </div>
-                        <div class="troubledisv-h2">
-                            <p>${continuetion[sums].title}</p>
-                            <h5>
-                                <i class="fa fa-clock"></i>
-                                <span>${datform}</span>
-                            </h5>
-                        </di
-                    `;
-                    fortroubleContainer.append(sohigh)
-                })
-                troubleContainer.append(fortroubleContainer)
-                // /////////////////////////////////////////////////////////////////////////////////////////////////
-                forconnetnet.innerHTML = `
+                </div>
+            `;
+            if(NOo === 4){
+                const addvertment = document.createElement('div')
+                addvertment.className = 'connetnet';
+                addvertment.innerHTML = `
                     <h3>Get Connected</h3>
                     <div class="concepconnnect">
                         <span class="" style="background-color:  #e4405f;">
@@ -617,95 +616,283 @@ async function TopFeedsContents(){
                         </span>
                     </div>
                 `;
-                connetnet.append(forconnetnet);
 
+                const AddverPicture = document.createElement('div')
+                AddverPicture.className = 'AddverPicture';
+                AddverPicture.innerHTML = `<img src="./assets/ad_retail_300x250.jpg" alt="">`
+            
+                wrapperForsmall.append(addvertment, AddverPicture)
+            }
+            wrapperForsmall.append(smallnewContain)
+        })
 
+        const scrollcount = 200;
+        const videoContainer = selector('.videSet');
+        const clickToMove1 = selector('.clickToMove1')
+        const clickToMove2 = selector('.clickToMove2')
 
-                const leftbehind = AllNews.slice(40, 52)
-                // console.log(leftbehind)
-                leftbehind.forEach((lefmen, vlee)=>{
-                    const dt3 = leftbehind[vlee].publishedAt.split("T")[0]
-                    const fleash = document.createElement('a')
-                    fleash.className = 'troubledisv';
-                    fleash.setAttribute('href', leftbehind[vlee].url);
-                    fleash.innerHTML = `
-                        <div class="troubledisv-h1">
-                            <img src="${leftbehind[vlee].image}" alt="">
+        videoContainer.innerHTML = '';
+        
+          try {
+            const res = await fetch('../public/video.json');
+            const videos = await res.json();
+            videos.forEach(video => {
+                const dtei5 = video.publishedAt.split("T")[0];
+                const vidcood = document.createElement('div');
+                vidcood.className = 'vidcood';
+            
+                vidcood.innerHTML = `
+                    <div class="forvideonews">
+                        <div class="iframe-wrapper" style="position:relative;">
+                            <div class="iframe-loader"></div>
+                            <iframe 
+                                src="https://www.youtube.com/embed/${video.videoId}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                onload="this.previousElementSibling.style.display='none';">
+                            </iframe>
                         </div>
-                        <div class="troubledisv-h2">
-                            <p>${leftbehind[vlee].title}</p>
-                            <h5>
-                                <i class="fa fa-clock"></i>
-                                <span>${dt3}</span>
-                            </h5>
+                        <div class="forvideoinfo">
+                            <p>${video.title}</p>
+                            <h6><i class="fa fa-clock"></i> ${dtei5}</h6>
                         </div>
-                    `;
-                    if((vlee +1) % 5 === 0){
-                        const lamba = document.createElement('div')
-                        lamba.className = 'lamba'
-                        lamba.innerHTML = '<img src="./assets/ad_retail_300x250.jpg" alt="">';
-                        continuw.append(lamba)
-                    }
-                    // secondflow.append(fleash)
-                    forcontinuw.append(fleash)
-                })
-                continuw.append(forcontinuw);
-
-                const advertcontainer3 = document.createElement('div')
-                advertcontainer3.className = 'advertcontainer3'
-                advertcontainer3.innerHTML = `
-                    <div class="jecues">
-                        <img src="./assets/Screenshot 2025-03-27 130807.jpg" alt="">
                     </div>
                 `;
+            
+                videoContainer.appendChild(vidcood);
+            });
+            
 
-                secondparentElement.append(topmane, smallnewContain, troubleContainer, connetnet, continuw)
-                editorspicksworks.append(firstparentElement, secondparentElement)
-               return mainContainer.append(topnotch, nmmn, editorspicksworks, advertcontainer3)
+            clickToMove1.addEventListener('click', function(){
+                videoContainer.scrollLeft -= scrollcount;
+            });
+            clickToMove2.addEventListener('click', function(){
+                videoContainer.scrollLeft += scrollcount;
+            });
 
-            } catch(error) {
-                console.log(error)
-            }
-    
-}
+          } catch (error) {
+            console.error(error)
+          }
+        
+        
 
-async function fetchVideoNews(topic) {
-    const apiUrl = `https://pipedapi.kavin.rocks/search?q=${encodeURIComponent(topic)}&filter=video`;
 
-    try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data.items && data.items.length > 0) {
-            displayVideos(data.items.slice(0, 5)); // Display only top 5 videos
-        } else {
-            console.log("No videos found.");
-        }
-    } catch (error) {
-        console.error("Error fetching video news:", error);
+    }catch (erro) {
+        console.error(erro)
     }
 }
 
-function displayVideos(videos) {
-    const videoContainer = document.getElementById("videoNews");
-    videoContainer.innerHTML = ""; // Clear previous content
+function init_news(){
+    News_Feeds()
+}
+async function News_Feeds(){
+    const forimagenews = selector('.forimagenews')
+    const fortextparagram = selector('.fortextparagram')
+    const forimagenews1 = selector('.jdjd')
+    const containersnewsworld = selector('.otherNewsworldnews1');
+    const ForSport = selector('.ForSport');
+    const fashion_stars = selector('.fashion_stars')
 
-    videos.forEach(video => {
-        const videoElement = document.createElement("div");
-        videoElement.className = "video-item";
-        videoElement.innerHTML = `
-            <img src="${video.thumbnail}" alt="${video.title}" />
-            <h4>${video.title}</h4>
-            <a href="https://www.youtube.com/watch?v=${video.url}">Watch Video</a>
+    try{
+        const [worldRes1, sportsRes1, fashionRes1] = await Promise.all([
+            fetch(worldNewsURL),
+            fetch(sportsNewsURL),
+            fetch(fashionNewsURL)
+        ]);
+        const worldNewsData1 = await worldRes1.json();
+        const sportsNewsData1 = await sportsRes1.json();
+        const fashionNewsData1 = await fashionRes1.json();
+        
+        const worldnewsObj1 = worldNewsData1.articles.map(article =>({
+            title: article.title,
+            url: article.url,
+            content: article.content,
+            description: article.description || '',
+            image: article.urlToImage || ImagePlaceholder ,
+            source: article.source.name,
+            author: article.author || 'Unknown Author',
+            category:article.category || 'GENERAL',
+            publishedAt: article.publishedAt
+        })) || [];
+                    
+        const sportnewsObj1 = sportsNewsData1.articles.map(article =>({
+            title: article.title,
+            content: article.content,
+            url: article.url,
+            description: article.description || '',
+            image: article.urlToImage || ImagePlaceholder,
+            source: article.source.name,
+            author: article.author || 'Unknown Author',
+            category:article.category || 'TECHNOLOGY',
+            publishedAt: article.publishedAt
+        })) || [];
+                    
+        const fashionnewObj1 = fashionNewsData1.articles.map(article =>({
+            title: article.title,
+            content: article.content,
+            url: article.url,
+            description: article.description || '',
+            image: article.urlToImage || ImagePlaceholder,
+            source: article.source.name,
+            author: article.author || 'Unknown Author',
+            category:article.category || 'FASHION',
+            publishedAt: article.publishedAt
+        })) || [];
+
+        // const AllNews1 = [...worldnewsObj1, ...sportnewsObj1, ...fashionnewObj1]
+
+        const FirstFetch = worldnewsObj1.slice(0, 3)
+
+        
+
+        const dtefi1 = FirstFetch[0].publishedAt.split("T")[0]
+        const dtefi2 = FirstFetch[1].publishedAt.split("T")[0]
+        const dtefi3 = FirstFetch[2].publishedAt.split("T")[0]
+
+        forimagenews.setAttribute('href', FirstFetch[0].url)
+        forimagenews.innerHTML = `
+            <img src="${FirstFetch[0].image}" alt="">
+            <div class="forimagenews-concs">
+                <div class="peace-unto">
+                    <div class="softman">
+                        <h2>${FirstFetch[0].title}</h2>
+                        <h5 class="Authourdetails">BY &nbsp;
+                            <span class="andwe">${FirstFetch[0].author}</span>&nbsp;&nbsp;
+                            <i class="fa fa-clock"></i>&nbsp;
+                            <span>${dtefi1}</span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
         `;
-        videoContainer.appendChild(videoElement);
-    });
+        fortextparagram.setAttribute('href', FirstFetch[1].url)
+        fortextparagram.innerHTML = `
+            <h2>${FirstFetch[1].title}</h2>
+            <h5 class="Authourdetails">BY &nbsp;
+                <span class="andwe">${FirstFetch[1].author}</span>&nbsp;&nbsp;
+                <i class="fa fa-clock"></i>&nbsp;
+                <span>${dtefi2}</span>
+            </h5>
+            <p>${FirstFetch[1].description}</p>
+        `;
+
+        forimagenews1.setAttribute('href', FirstFetch[2].url)
+        forimagenews1.innerHTML = `
+            <img src="${FirstFetch[2].image}" alt="">
+            <div class="forimagenews-concs">
+                <div class="peace-unto">
+                    <div class="softman">
+                        <h2>${FirstFetch[2].title}</h2>
+                        <h5 class="Authourdetails">BY &nbsp;
+                            <span class="andwe">${FirstFetch[2].author}</span>&nbsp;&nbsp;
+                            <i class="fa fa-clock"></i> &nbsp;
+                            <span>${dtefi3}</span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const worldNews = worldnewsObj1.slice(3);
+        worldNews.forEach((heir, gene)=>{
+            const dtei4 = worldNews[gene].publishedAt.split("T")[0]
+            const containersnewsworld1 = document.createElement('a')
+            containersnewsworld1.className = 'containersnewsworld';
+            containersnewsworld1.setAttribute('href', worldNews[gene].url)
+            containersnewsworld1.innerHTML = `
+                <div class="No-image">
+                <img src="${worldNews[gene].image}" alt="">
+                </div>
+                <div class="textonecs">
+                    <h3>${worldNews[gene].title}</h3>
+                    <h5 class="Authourdetails">BY &nbsp;
+                        <span class="andwe">${worldNews[gene].author}</span>&nbsp;&nbsp;
+                       <i class="fa fa-clock"></i>&nbsp;
+                        <span>${dtei4}</span>
+                    </h5>
+                </div>
+            `;
+            containersnewsworld.append(containersnewsworld1)
+        })
+        const anotherAdvert = document.createElement('div')
+            anotherAdvert.className = 'anotherAdvert';
+            anotherAdvert.innerHTML =  `
+                <img src="../assets/Screenshot 2025-03-27 130807.jpg" alt="">
+            `;
+        containersnewsworld.append(anotherAdvert)
+
+
+        const sportify = sportnewsObj1;
+        sportify.forEach((kin, wane)=>{
+            const twek = sportify[wane].publishedAt.split("T")[0]
+             const contentwwaper = document.createElement('a')
+             contentwwaper.setAttribute('href', sportify[wane].url)
+             contentwwaper.className = 'contentwwaper';
+             contentwwaper.innerHTML = `
+                    <div class="imagrag">
+                        <img src="${sportify[wane].image}" alt="">
+                    </div>
+                    <div class="fornewsconns">
+                        <h2>${sportify[wane].title}</h2>
+                        <p class="poststatus">${sportify[wane].description}</p>
+                        <h5>BY &nbsp;
+                            <span class="loveq">${sportify[wane].author}</span>&nbsp;&nbsp;
+                            <i class="fa fa-clock"></i>&nbsp;
+                            <span>${twek}</span>
+                            <i class="fa fa-comment"></i>
+                            <span>0</span>
+                        </h5>
+                    </div>
+             `;
+             ForSport.append(contentwwaper)
+             if((wane +1)% 4 === 0){
+                const advertcontainer = document.createElement('div')
+                advertcontainer.className = 'advertcontainer';
+                advertcontainer.innerHTML = `<img src="../assets/ad_970x90.png" alt="">`;
+                ForSport.append(advertcontainer)
+             }
+        })
+        
+
+        const fashion_way = fashionnewObj1;
+        fashion_way.forEach((fuk, dkd)=>{
+            const dtei6 = fashion_way[dkd].publishedAt.split("T")[0]
+            const trike = document.createElement('a');
+            trike.setAttribute('href', fashion_way[dkd].url);
+            trike.className = 'trike';
+            trike.innerHTML = `
+                <div class="Alligience1">
+                    <img src="${fashion_way[dkd].image}" alt="">
+                </div>
+                <div class="Alligience2">
+                    <h2>${fashion_way[dkd].title}</h2>
+                    <h5>BY &nbsp;
+                        <span class="loveq">Analisa  Novak</span>&nbsp;&nbsp;
+                        <i class="fa fa-clock"></i>&nbsp;
+                        <span>${dtei6}</span>
+                    </h5>
+                </div>
+            `;
+            fashion_stars.append(trike)
+        })
+
+    }catch(err){
+        console.error(err)
+    }
 }
 
-// Fetch different categories
-// fetchVideoNews("sports news");
-// fetchVideoNews("fashion news");
-// fetchVideoNews("world news");
+function init_weather(){
+    Weather_Content()
+}
+async function Weather_Content(){
+    
+}
+
+
+
+
+
 
 async function displayCountriesWithWeather() {
     mainContainer.innerHTML = `
@@ -955,7 +1142,6 @@ async function displayCountriesWithWeather() {
 
 function clearWeatherView() {
     if(mainContainer.childElementCount > 0 || mainContainer.innerHTML !== '') {
-        alert('Main container has child elements');
         mainContainer.innerHTML = ''; 
     }
 }
@@ -971,216 +1157,7 @@ function DateFunction(){
     const DaysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     DateElement.innerHTML = DaysArray[days] + ',  ' + MnthsArray[months] +" " + date + ", " + year   
 }
+
 DateFunction()
  
 
-////////////////////////////////////////////////////////////////
-
- // let countries = [];
-    // let currentIndex = 0;
-    // const batchSize = 10;
-    // let isLoading = false;
-
-
-    // async function loadCountries() {
-    //     const response = await fetch('./Countries.json');
-    //     countries = await response.json();
-    //     loadNextBatch(); 
-    // }
-    
-    // async function getWeather(lat, lon) {
-    //     try {
-    //         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-    //         const data = await response.json();
-    //         // console.log(data)
-    //     return data.current_weather;
-    //     } catch (error) {
-    //         mainContainer.innerHTML = `<p class="sions"> Errors while fetching request, ${error}. Please reload page</p>`;
-    //         return null
-    //     }
-        
-    // }
-    
-    // // Load the next batch of countries
-    // async function loadNextBatch() {
-    //     if (isLoading || currentIndex >= countries.length) return;
-    //     isLoading = true;
-    
-    //     const batch = countries.slice(currentIndex, currentIndex + batchSize);
-    
-    //     for (const country of batch) {
-    //         const weather = await getWeather(country.latitude, country.longitude);
-    
-    //         const countryDiv = document.createElement('div');
-    //         countryDiv.className = 'country-card';
-    //         countryDiv.innerHTML = `
-    //           <div>
-    //               <h3>${country.country}</h3>
-    //               <p>🌡️ Temperature: ${weather.temperature}&deg;C</p>
-    //               <p>💨 Wind Speed: ${weather.windspeed} km/h</p>
-    //               <p>🧭 Wind Direction: ${weather.winddirection}&deg;</p>
-    //           </div>
-    //         `;
-    //         contentwapp.appendChild(countryDiv);
-    //     }
-    
-    //     disciples.appendChild(contentwapp);
-    //     otherCountry.appendChild(disciples);
-
-
-    //     if (!mainContainer.contains(Allweather)) {
-    //         mainContainer.innerHTML = '';
-    //         mainContainer.append(Allweather, otherCountry);
-    //     }
-    
-    //     currentIndex += batchSize;
-    //     isLoading = false;
-    // }
-    
-    // // Infinite scroll: detect scroll near bottom
-    // window.addEventListener('scroll', () => {
-    //     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    //     if (scrollTop + clientHeight >= scrollHeight - 150) {
-    //         loadNextBatch();
-    //     }
-    // });
-
-    // loadCountries();
-
-    //////////////////////////////////////////////////////////////////////////////
-
-//     let countries = [];
-//     let currentIndex = 0;
-//     const batchSize = 5;
-//     let isLoading = false;
-
-// async function loadCountries() {
-//     const response = await fetch('./Countries.json');
-//     countries = await response.json();
-//     loadNextBatch(); 
-// }
-
-// async function getWeather(lat, lon) {
-//     try {
-//         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-//         const data = await response.json();
-//         return data.current_weather;
-//     } catch (error) {
-//         Allweather.innerHTML = `<p class="sions">Error fetching weather: ${error}. Please reload.</p>`;
-//         return null;
-//     }
-// }
-
-// async function loadNextBatch() {
-//     if (isLoading || currentIndex >= countries.length) return;
-//     isLoading = true;
-
-//     const batch = countries.slice(currentIndex, currentIndex + batchSize);
-
-//     for (const country of batch) {
-//         const weather = await getWeather(country.latitude, country.longitude);
-//         if (!weather) continue;
-
-//         const countryDiv = document.createElement('div');
-//         countryDiv.className = 'country-card';
-//         countryDiv.innerHTML = `
-//           <div>
-//               <h3>🌍 ${country.country}</h3>
-//               <p>🌡️ Temperature: ${weather.temperature}&deg;C</p>
-//               <p>💨 Wind Speed: ${weather.windspeed} km/h</p>
-//               <p>🧭 Wind Direction: ${weather.winddirection}&deg;</p>
-//           </div>
-//         `;
-//         contentwapp.appendChild(countryDiv);
-//     }
-
-//     disciples.appendChild(contentwapp);
-//     otherCountry.appendChild(disciples);
-
-//         if(!mainContainer.contains(Allweather)) {
-//             mainContainer.innerHTML = ''; 
-//             mainContainer.append(Allweather, otherCountry);
-//         }
-
-//         currentIndex += batchSize;
-//         isLoading = false;
-    
-//         if(currentIndex < countries.length) {
-//             interValClealner = setTimeout(loadNextBatch, 800); 
-//         }
-//     }
-
-//     loadCountries();
-
-
-//////////////////////////////////////////////////////////////////////
-
-// async function loadCountries() {
-//     const response = await fetch('./Countries.json');
-//     countries = await response.json();
-//     if (isWeatherViewActive) loadNextBatch(); 
-// }
-
-// async function getWeather(lat, lon) {
-//     try {
-//         const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-//         const data = await response.json();
-//         return data.current_weather;
-//     } catch (error) {
-//         mainContainer.innerHTML = `<p class="sions">Error fetching weather: ${error}. Please reload.</p>`;
-//         return null;
-//     }
-// }
-
-// async function loadNextBatch() {
-//     if (!isWeatherViewActive || isLoading || currentIndex >= countries.length) return;
-//     isLoading = true;
-
-//     const batch = countries.slice(currentIndex, currentIndex + batchSize);
-
-//     for (const country of batch) {
-//         if (!isWeatherViewActive) return; // Stop if view changes mid-loop
-
-//         const weather = await getWeather(country.latitude, country.longitude);
-//         if (!weather) continue;
-
-//         const countryDiv = document.createElement('div');
-//         countryDiv.className = 'country-card';
-//         countryDiv.innerHTML = `
-//           <div>
-//               <h3>🌍 ${country.country}</h3>
-//               <p>🌡️ Temperature: ${weather.temperature}&deg;C</p>
-//               <p>💨 Wind Speed: ${weather.windspeed} km/h</p>
-//               <p>🧭 Wind Direction: ${weather.winddirection}&deg;</p>
-//           </div>
-//         `;
-//         contentwapp.appendChild(countryDiv);
-//     }
-
-//     disciples.appendChild(contentwapp);
-//     otherCountry.appendChild(disciples);
-
-//     if (!mainContainer.contains(Allweather)) {
-//         mainContainer.innerHTML = '';
-//         mainContainer.append(Allweather, otherCountry);
-//     }
-
-//     currentIndex += batchSize;
-//     isLoading = false;
-
-//     if (currentIndex < countries.length && isWeatherViewActive) {
-//         batchTimeout = setTimeout(loadNextBatch, 800);
-//     }
-// }
-
-// // ✅ Call this when switching to another nav (like "News")
-// loadCountries()
-
-// function clearWeatherView() {
-//     isWeatherViewActive = false;
-//     if(batchTimeout) clearTimeout(batchTimeout); // Cancel timeout if pending
-//     mainContainer.innerHTML = ''; // Clear screen
-//     countries = [];
-//     currentIndex = 0;
-//     isLoading = false;
-// }

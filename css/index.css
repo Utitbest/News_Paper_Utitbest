@@ -1,3 +1,4 @@
+@import url("SeconIndex.css");
 :root{
     --darkblue-color: #1c2241;
     --yellow-color: #eac434;
@@ -27,10 +28,45 @@ html{
 }
 body{
     height: 100lvh;
+    position: relative;
 }
 h5{
     font-family: "Alegreya", sans-serif !important;
 }
+a{
+    text-decoration: none !important;
+}
+#Loadinging{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+.pre-loader{
+    opacity: 0;
+    visibility: hidden;
+}
+.loadder{
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--darkblue-color);
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0%{
+        transform: rotate(0deg);
+    }100%{
+        transform:rotate(360deg);
+    }
+}
+
 .smith_name{
     width: 100%;
     display: flex;
@@ -78,6 +114,14 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     color: var(--darkblue-color);
 }
 
+.wrapperForsmall{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: .6em;
+}
+
+
 .navstyle{
     position: sticky;
     top: 0;
@@ -89,7 +133,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     z-index: 1000;
     padding: 20px ;
     background-color: #fff;
-    box-shadow:inset 1px -5px 9px 0px #d8d8d8;
+    box-shadow:-1px 5px 6px 0px #d8d8d8;
 }
 .navstyle .siteicons{
     height: 40px;
@@ -156,6 +200,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
 
 .site-main-content{
     padding: .6em;
+    width: 100%;
 }
 .site-main-content h4{
     /* font-family: "Roboto", sans-serif; */
@@ -173,7 +218,7 @@ main{
     align-items: center;
     justify-content: center;
 }
-main .topnotch{
+#hometab .topnotch{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
@@ -184,13 +229,13 @@ main .topnotch{
     background-color: var(--grey-color);
     box-shadow: 1px 0px 4px 1px #c8c8c8;
 }
-main .topnotch .main-news{
+#hometab .topnotch .main-news{
     overflow: hidden;
     position: relative;
     height: 100%;
     cursor: pointer;
 }
-main .topnotch .main-news .ontoptrenn{
+#hometab .topnotch .main-news .ontoptrenn{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -199,7 +244,7 @@ main .topnotch .main-news .ontoptrenn{
     left: 0;
     pointer-events: none;
 }
-main .topnotch .main-news:hover .ontoptrenn{
+#hometab .topnotch .main-news:hover .ontoptrenn{
     background:linear-gradient(360deg, rgba(112, 112, 112, 0.603), rgb(255 255 255 / 0%), rgb(255 255 255 / 0%));
     transition-delay: 1s;
 }
@@ -212,15 +257,15 @@ main .topnotch .main-news:hover .ontoptrenn{
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 
 }
-main .topnotch .main-news img:hover{
+#hometab .topnotch .main-news img:hover{
     object-position: 40% center !important; 
     filter: brightness(0.9);
 }
-main .topnotch .main-news:hover  .contenttag h5{
+#hometab .topnotch .main-news:hover  .contenttag h5{
     transform: translateY(1px);
     opacity: 1;
 }
-main .topnotch .main-news:hover  .ontoptrenn .contenttag{
+#hometab .topnotch .main-news:hover  .ontoptrenn .contenttag{
     transform:translateY(-19px);
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 
@@ -246,21 +291,21 @@ main .topnotch .main-news:hover  .ontoptrenn .contenttag{
     font-size: 25px;
     line-height: 1em;
 }
-main .topnotch .main-news img{
+#hometab .topnotch .main-news img{
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: object-position 0.3s ease-in-out, filter 0.3s ease-in-out;
     object-position: center;
 }
-main .topnotch .side-news{
+#hometab .topnotch .side-news{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     max-height: 500px;
 
 }
-main .topnotch .side-news .fourplate img{
+#hometab .topnotch .side-news .fourplate img{
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -268,7 +313,7 @@ main .topnotch .side-news .fourplate img{
     object-position: center;
 }
 
-main .topnotch .side-news .fourplate{
+#hometab .topnotch .side-news .fourplate{
     position: relative;
     cursor: pointer;
     overflow: hidden;
@@ -286,7 +331,7 @@ main .topnotch .side-news .fourplate{
     transform: translateY(20px);
 }
 
-main .topnotch .side-news .fourplate .sidenewscontent{
+#hometab .topnotch .side-news .fourplate .sidenewscontent{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -295,10 +340,10 @@ main .topnotch .side-news .fourplate .sidenewscontent{
     left: 0;
     pointer-events: none;
 }
-main .topnotch .side-news .fourplate:hover .sidenewscontent{
+#hometab .topnotch .side-news .fourplate:hover .sidenewscontent{
     background:linear-gradient(360deg, rgba(112, 112, 112, 0.603), rgb(255 255 255 / 0%), rgb(255 255 255 / 0%));
 }
-main .topnotch .side-news .fourplate .sidenewscontent .absoluteside-content{
+#hometab .topnotch .side-news .fourplate .sidenewscontent .absoluteside-content{
     position: absolute;
     bottom: 0;
     margin:0 12px;
@@ -341,15 +386,15 @@ main .topnotch .side-news .fourplate .sidenewscontent .absoluteside-content{
     transform: translateY(36px);
 }
 
-main .topnotch .side-news .fourplate:hover  img{
+#hometab .topnotch .side-news .fourplate:hover  img{
     object-position: 40% center; 
     filter: brightness(0.7);
 }
-main .topnotch .side-news .fourplate:hover .absoluteside-content{
+#hometab .topnotch .side-news .fourplate:hover .absoluteside-content{
     transform:translateY(-15px);
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
-main .topnotch .side-news .fourplate:hover .absoluteside-content h5{
+#hometab .topnotch .side-news .fourplate:hover .absoluteside-content h5{
     transform: translateY(21px);
     opacity: 1;
 }
@@ -369,7 +414,18 @@ main .topnotch .side-news .fourplate:hover .absoluteside-content h5{
     text-decoration: underline;
     color: var(--darkblue-color);
 }
-
+.AddverPicture{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: auto;
+}
+.AddverPicture img{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    height: auto;
+}
 
 .nmmn{
     padding: .6em;
@@ -395,7 +451,7 @@ main .topnotch .side-news .fourplate:hover .absoluteside-content h5{
     /* background-color: var(--darkblue-color); */
     background-color: var(--yellow-color);
 }
-main .editorspicksworks{
+#hometab .editorspicksworks{
     width: 100%;
     display: grid;
     max-width: 1200px;
@@ -404,7 +460,7 @@ main .editorspicksworks{
     padding: 0 auto;
     height: auto;
 }
-main .editorspicksworks .firstparentElement{
+#hometab .editorspicksworks .firstparentElement{
     height: auto;
     /* background-color: var(--grey-color); */
 }
@@ -490,7 +546,7 @@ main .editorspicksworks .firstparentElement{
 
 
 
-main .editorspicksworks .secondparentElement{
+#hometab .editorspicksworks .secondparentElement{
     height: auto;   
     /* background-color: var(--grey-color); */
     flex-direction: column;
@@ -537,6 +593,7 @@ main .editorspicksworks .secondparentElement{
     height: auto;
     flex-direction: column;
     gap: 20px;
+    text-decoration: none;
 }
 .smallnewContain .smallnew{
     width: 100%;
@@ -681,66 +738,132 @@ main .editorspicksworks .secondparentElement{
     height: auto;
     object-fit: cover;
 }
-main .vidownew{
+#hometab .vidownew{
     width: 100%;
-    margin-top: 2em;
     background-color: var(--darkblue-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 20px;
+    position: relative;
 }
-main .vidownew hr{
+#hometab .vidownew hr{
     border: solid 2px #fff;
 }
-main .vidownew h6{
+#hometab .vidownew h6{
     color: var(--grey-color);
     font-family: "Inter", sans-serif;
     font-weight: 600;
     font-style: italic;
 }
-main .vidownew .videSet{
+#hometab .vidownew .videSet{
     width: 100%;
     display: flex;
     margin-top:1em ;
-    overflow-x: auto;
+    overflow-x: hidden;
     gap: 12px;
+    scroll-behavior: smooth;
+
 }
 
-main .vidownew .videSet .vidcood{
+.ForBotton{
+    position: absolute;
+    background-color: var(--grat-color-);
+    padding: .3em;
+    z-index: 100;
+    top: 55px;
     display: flex;
-    min-width: 250px;
-    /* border: groove; */
-    height: 200px;
-    flex-direction: column;
+    left: 23px;
+    align-items: center;
 }
-main .vidownew .videSet .vidcood .forvideonews{
+
+.ForBotton button{
+    background:none;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .6em;
+    height: 100%;
+}
+.ForBotton button:active{
+    background: var(--darkblue-color);
+}
+.ForBotton button .rft{
+    color: #fff;
+}
+
+
+#hometab .vidownew .videSet .vidcood{
+    display: flex;
+    min-width: 300px;
+    height: auto;
+}
+#hometab .vidownew .videSet .vidcood .forvideonews{
     width: 100%;
     overflow: hidden;
     position: relative;
+    display: flex;
+    height:auto;
+    flex-direction: column;
 }
-main .vidownew .videSet .vidcood .forvideonews img{
+.forvideonews iframe{
     width: 100%;
-    height: auto;
-    object-fit: cover;
+    height: 260px;
 }
-.faicon{
+
+.iframe-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+  
+  .iframe-loader {
     position: absolute;
-    bottom: 0;
+    top: 0; 
     left: 0;
-    background-color: var(--darkblue-color);
-    padding: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    font-size: 23px !important;
-    color: var(--yellow-color);
-    gap: 5px;
-}
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .iframe-loader::after {
+    content: "";
+    width: 30px;
+    height: 30px;
+    border: 4px solid #afa5a5;
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .iframe-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    border-radius: 8px;
+  }
+  
+
 .forvideoinfo{
     gap: .6em;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: auto;
+    padding: .4em;
+    
 }
 .forvideoinfo p{
     font-weight: 600;
@@ -748,6 +871,7 @@ main .vidownew .videSet .vidcood .forvideonews img{
     color: #fff;
     font-size: 17px;
     line-height: 1em;
+    word-wrap:break-word;
 }
 .forvideoinfo h6{
     font-size: 11px !important;
@@ -892,6 +1016,9 @@ footer .rightandhonnor p{
     text-align: right;
     width: 60%;
 }
+.secondMainMan .addver img{
+    width: auto;
+}
 .worldNewsonly{
     width: 100%;
     display: flex;
@@ -996,7 +1123,8 @@ footer .rightandhonnor p{
 .fortextparagram p{
     font-size: 15px;
     font-family: "Inter", sans-serif;
-
+    color:   rgb(27, 26, 26);
+    text-shadow: 0px 1px 1px #0a0a0a;
 }
 
 .otherNewsworldnews{
@@ -1019,6 +1147,7 @@ footer .rightandhonnor p{
     display: flex;
     flex-direction: column;
     margin: .3em;
+    text-decoration: none;
 }
 .No-image{
     width: 100%;
@@ -1361,7 +1490,8 @@ main .worldOfSport-fashion{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 400px;
+    height: auto;
+    margin: .5em 0;
 }
 .advertcontainer3 .jecues{
     height: 100%;
@@ -1378,4 +1508,13 @@ main .worldOfSport-fashion{
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
-  
+.news_Section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+
