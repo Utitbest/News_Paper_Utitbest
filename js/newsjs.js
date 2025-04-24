@@ -395,8 +395,8 @@ async function TopFeedsContents(){
                 videoContainer.scrollLeft += scrollcount;
             });
 
-          } catch (error) {
-            console.error(error)
+          } catch (error){
+            console.error(error);
           }
         
         
