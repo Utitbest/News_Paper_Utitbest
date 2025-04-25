@@ -149,14 +149,14 @@ function NavigationLink(){
 
          //////////////////For home tabs///////////////////////
 
-        fetch(`tabs/${'about_us'}.html`)
+        fetch(`tabs/${'home'}.html`)
         .then(response => response.text())
         .then(results =>{
             mainContainer.innerHTML = results;
-            // const initFn = window[`init_home`];
-            //     if (typeof initFn === "function") {
-            //         initFn(); 
-            //     }
+            const initFn = window[`init_home`];
+                if (typeof initFn === "function") {
+                    initFn(); 
+                }
         })
         .catch(error =>{
             console.error(error)
@@ -181,7 +181,9 @@ async function TopFeedsContents(){
         const worldNewsData = await worldRes.json();
         const sportsNewsData = await sportsRes.json();
         const fashionNewsData = await fashionRes.json();
-
+        console.log(worldNewsData)
+        console.log(sportsNewsData)
+        console.log(fashionNewsData)
         
         const worldnewsObj = worldNewsData.articles.map(article =>({
             title: article.title,
@@ -430,7 +432,7 @@ async function TopFeedsContents(){
 
     }catch (erro) {
         console.error(erro)
-        mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${erro}, please reload the page</p>`;
+        mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${erro}, please reload the page or check console</p>`;
     }
 }
 
@@ -950,6 +952,8 @@ function DateFunction(){
     DateElement.innerHTML = DaysArray[days] + ',  ' + MnthsArray[months] +" " + date + ", " + year   
 }
 DateFunction()
+
+
 
 
 
