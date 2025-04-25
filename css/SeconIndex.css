@@ -47,6 +47,8 @@
     overflow: hidden;
     display: flex;
     padding: 0 11px;
+    min-height: 300px;
+    height: 300px;
 }
 .seniorwrapper .forimagenews {
     width: 50%;
@@ -519,7 +521,6 @@ main .worldOfSport-fashion{
     flex-direction: column;
     width: 100%;
 }
-
 .errorcontact{
     display: flex;
     align-items: center;
@@ -528,4 +529,85 @@ main .worldOfSport-fashion{
     font-weight: 600;
     font-family: "Alegreya", sans-serif;
     color: rgb(224, 45, 13);
+}
+#article1{
+    display: flex;
+    width: 100%;
+    padding: 0 2em;
+    gap: .1em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    flex-direction: column;
+}
+
+#article1 .searchEle{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: .4em;
+}
+#article1 .searchEle .imagesearch{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    overflow: hidden;
+}
+
+#article1 .searchEle .imagesearch img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+#article1 .searchEle .articlesCont{
+    height: auto;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+.loasdi,
+.loasdi1{
+    box-shadow: inset 1px 1px 5px 0 gray;
+}
+.main-news.loasdi::before{
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px; height: 30px;
+    border: 4px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.side-news.loasdi1::before{
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    /* transform: translate(-50%, -50%); */
+    width: 30px; height: 30px;
+    border: 4px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin1 1s linear infinite;
+}
+
+.forimagenews.loasdi1::before{
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    /* transform: translate(-50%, -50%); */
+    width: 30px; height: 30px;
+    border: 4px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin1 1s linear infinite;
+}
+
+@keyframes spin1 {
+    to { transform: rotate(360deg); }
 }

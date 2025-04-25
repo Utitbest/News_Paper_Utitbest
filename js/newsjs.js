@@ -31,10 +31,13 @@ const mainContainer = selector('main')
 const NavChildren = selectorAll('.navstyle ul li a')
 const home_tab = selector('#hometab')
 const ImagePlaceholder = 'assets/placeholder-600x317.gif';
-const seletingelement = document.querySelector('.contenttag')
+const seletingelement = selector('.contenttag')
+const ianguages = selector('.ianguages')
+
 
 function NavigationLink(){
     document.addEventListener('DOMContentLoaded', ()=>{
+        
         NavChildren.forEach((Numb, indexc)=>{
             Numb.onclick = async function(){
                 
@@ -114,8 +117,31 @@ function NavigationLink(){
                         })
                     break;
                 
-                    case 'category':
-                        mainContainer.innerHTML = `<h1> Category is coming Soon</h1>`
+                    case 'about us':
+                        mainContainer.innerHTML = `
+                            <div class="loading-spinner">
+                                <div class="spinner"></div>
+                                <p>Loading news...</p>
+                            </div>
+                        `;
+                        fetch(`tabs/${'about_us'}.html`)
+                        .then(response => response.text())
+                        .then(results =>{
+                            mainContainer.innerHTML = ''
+                            mainContainer.innerHTML = results;
+                            // const initweath = window[`init_weather`];
+                            //     if (typeof initweath === "function") {
+                            //         initweath(); 
+                            //     }
+                        })
+                        .catch(error =>{
+                            console.error(error)
+                            mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${error}, please reload the page</p>`;
+                        })
+                    break;
+
+                    case 'blog':
+                        mainContainer.innerHTML = `<h1> Blog page is coming Soon</h1>`
                     break;
                 }
             }
@@ -123,14 +149,14 @@ function NavigationLink(){
 
          //////////////////For home tabs///////////////////////
 
-        fetch(`tabs/${'home'}.html`)
+        fetch(`tabs/${'about_us'}.html`)
         .then(response => response.text())
         .then(results =>{
             mainContainer.innerHTML = results;
-            const initFn = window[`init_home`];
-                if (typeof initFn === "function") {
-                    initFn(); 
-                }
+            // const initFn = window[`init_home`];
+            //     if (typeof initFn === "function") {
+            //         initFn(); 
+            //     }
         })
         .catch(error =>{
             console.error(error)
@@ -211,7 +237,7 @@ async function TopFeedsContents(){
         const DateSplit = AllNews[0].publishedAt.split("T")[0]
         mainNews.setAttribute('href', AllNews[0].url)
         mainNews.innerHTML = `
-            <img src="${AllNews[0].image}" alt="">
+            <img src="${AllNews[0].image}" alt="" onload="this.parentElement.classList.remove('loasdi')">
             <div class="ontoptrenn">
                 <div class="contenttag">
                     <div class="hellow">${AllNews[0].category}</div>
@@ -234,7 +260,7 @@ async function TopFeedsContents(){
             contaner.className = 'fourplate';
             contaner.setAttribute('href', Second_looping[index].url)
             contaner.innerHTML = `
-                <img src="${Second_looping[index].image}" alt="" class="topfeedsImage">
+                <img src="${Second_looping[index].image}" alt="" class="topfeedsImage" onload="this.closest('.loasdi1')?.classList.remove('loasdi1')">
                 <div class="sidenewscontent">
                     <div class="absoluteside-content">
                         <div style="position: relative; display:flex;">
@@ -261,7 +287,7 @@ async function TopFeedsContents(){
             matter.className = 'matters';
             matter.setAttribute('href', Third_looping[Numbs].url);
             matter.innerHTML = `
-            <div class="forimagestake">
+                <div class="forimagestake">
                     <img src="${Third_looping[Numbs].image}" alt="">
                     <div class="ontopsma">${Third_looping[Numbs].category}</div>
                 </div>
@@ -350,7 +376,7 @@ async function TopFeedsContents(){
             wrapperForsmall.append(smallnewContain)
         })
 
-        const scrollcount = 200;
+        const scrollcount = 300;
         const videoContainer = selector('.videSet');
         const clickToMove1 = selector('.clickToMove1')
         const clickToMove2 = selector('.clickToMove2')
@@ -477,7 +503,7 @@ async function News_Feeds(){
 
         forimagenews.setAttribute('href', FirstFetch[0].url)
         forimagenews.innerHTML = `
-            <img src="${FirstFetch[0].image}" alt="">
+            <img src="${FirstFetch[0].image}" alt="" onload="this.parentElement.classList.remove('loasdi1')">
             <div class="forimagenews-concs">
                 <div class="peace-unto">
                     <div class="softman">
@@ -504,7 +530,7 @@ async function News_Feeds(){
 
         forimagenews1.setAttribute('href', FirstFetch[2].url)
         forimagenews1.innerHTML = `
-            <img src="${FirstFetch[2].image}" alt="">
+            <img src="${FirstFetch[2].image}" alt="" onload="this.parentElement.classList.remove('loasdi1')">
             <div class="forimagenews-concs">
                 <div class="peace-unto">
                     <div class="softman">
@@ -614,19 +640,17 @@ function init_weather(){
 }
 async function Weather_Content(){
 
-    const searchbuds = selector('.searchbuds')
-    const inputElement = selector('.inputElement')
 
     let countydiv = selector('.h1CountryName')
     let firstspan = selector('.weath1')
     let secondspan = selector('.weath2')
     let thirdspan = selector('.weath3')
     let fourthspan = selector('.weath4')
-
-    searchbuds.addEventListener('click', async()=>{
+    const inputElement = selector('.inputElement')
+    const searchbuds1 = selector('.searchbuds')
+    searchbuds1.addEventListener('click', async()=>{
         const inputvalues = inputElement.value.trim()
-        if(!inputvalues)return;
-
+        if(!inputvalues)return;        
         countydiv.innerHTML = `<span>🌍City / Country:<i class="fa fa-spinner fa-spin scu"></i></span>`;
         firstspan.innerHTML = `🌡️   Temperature: <i class="fa fa-spinner fa-spin scu"></i>`;
         secondspan.innerHTML = `⏰ Date & Time: <i class="fa fa-spinner fa-spin scu"></i>`;
@@ -661,7 +685,7 @@ async function Weather_Content(){
             thirdspan.innerHTML = `🧭  Wind Direction: <p>${weather.winddirection}&deg;</p>`;
             fourthspan.innerHTML = `💨  Wind Speed:  <p>${weather.windspeed}km/h</p>`;
 
-            console.log(country, name, weather)
+            // console.log(country, name, weather)
 
         }catch(error){
             console.error(error)
@@ -672,12 +696,6 @@ async function Weather_Content(){
             fourthspan.innerHTML = `💨  Wind Speed:  <p>--</p>`; 
         }
         
-    })
-
-    window.addEventListener('keyup', async(event)=>{
-        if(event.keyCode === 13){
-            searchbuds.click()
-        }
     })
 }
 async function countryweather(){
@@ -771,246 +789,154 @@ async function countryweather(){
 
 }
 
-async function displayCountriesWithWeather() {
-    mainContainer.innerHTML = `
-        <div class="loading-spinne">
-            <div class="spinner"></div>
-            <p>Loading news...</p>
-        </div>
-    `;
-    const Allweather = document.createElement('div')
-    Allweather.className = 'Allweather';
-    const videoWeather = document.createElement('video')
-    videoWeather.src = '../assets/weatherVideo.mp4';
-    videoWeather.className = 'videoWeather';
-    videoWeather.setAttribute('loop', '')
-    videoWeather.play()
+async function SearchFormore() {
+    const searchInputvalues = selector('.searchbar input')
+    const searchButton1 = selector('.searchbar span')
+    try {
 
-    const topdiv = document.createElement('div')
-    topdiv.className = 'topdiv';
-    const towrappeBith = document.createElement('div')
-    towrappeBith.className = 'towrappeBith';
-
-    
-    const firstdiv = document.createElement('div');
-    firstdiv.className = 'firstdiv';
-    const divinput = document.createElement('div')
-    divinput.className = 'divinput';
-
-    const inputElement = document.createElement('input')
-    inputElement.className = 'inputElement';
-    inputElement.type = 'text';
-    inputElement.placeholder = 'Search City or Country'
-    const searchbuds = document.createElement('span')
-    searchbuds.className = 'searchbuds'
-    searchbuds.innerHTML = `<i class="fa fa-search kkd"></i>`;
-
-    divinput.append(inputElement, searchbuds)
-    firstdiv.appendChild(divinput)
-
-
-    const seconddiv = document.createElement('div')
-    seconddiv.className = 'seconddiv';
-
-    const ApartMent1 = document.createElement('div')
-    ApartMent1.className = 'ApartMent1';
-
-    const countydiv = document.createElement('div')
-    countydiv.className = 'h1CountryName';
-    const firstspan = document.createElement('span')
-    const secondspan = document.createElement('span')
-    const thirdspan = document.createElement('span')
-    const fourthspan = document.createElement('span')
-
-
-    countydiv.innerHTML = `<span>🌍City / Country:<utitbest>--</utitbest></span>`;
-    firstspan.innerHTML = `🌡️   Temperature: <p>--</p>`;
-    secondspan.innerHTML = `⏰ Date & Time: <p>--</p>`;
-    thirdspan.innerHTML = `🧭  Wind Direction: <p>--</p>`;
-    fourthspan.innerHTML = `💨  Wind Speed:  <p>--</p>`;
-
-
-    ApartMent1.append(countydiv, firstspan, secondspan, thirdspan, fourthspan)
-
-    searchbuds.addEventListener('click', async()=>{
-        const inputvalues = inputElement.value.trim()
-        if(!inputvalues)return;
-
-        countydiv.innerHTML = `<span>🌍City / Country:<i class="fa fa-spinner fa-spin scu"></i></span>`;
-        firstspan.innerHTML = `🌡️   Temperature: <i class="fa fa-spinner fa-spin scu"></i>`;
-        secondspan.innerHTML = `⏰ Date & Time: <i class="fa fa-spinner fa-spin scu"></i>`;
-        thirdspan.innerHTML = `🧭  Wind Direction: <i class="fa fa-spinner fa-spin scu"></i>`;
-        fourthspan.innerHTML = `💨  Wind Speed:  <i class="fa fa-spinner fa-spin scu"></i>`;
-        try{
-            const geoResponse = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${inputvalues}`);
-            const geoData = await geoResponse.json();
-            
-            // coming for it later
-            // const response = await fetch(`https://wttr.in/${location}?format=%C+%t`);
-
-            if(!geoData.results || geoData.results.length === 0) {
-                countydiv.innerHTML = `<span>🌍City / Country:<utitbest>Search not found ❌</utitbest></span>`;
-                firstspan.innerHTML = `🌡️   Temperature: <p>--</p>`;
-                secondspan.innerHTML = `⏰ Date & Time: <p>--</p>`;
-                thirdspan.innerHTML = `🧭  Wind Direction: <p>--</p>`;
-                fourthspan.innerHTML = `💨  Wind Speed:  <p>--</p>`;            
-                return;
+        searchInputvalues.addEventListener('input', () => {
+            const value = searchInputvalues.value.trim();
+          
+            if (value === '') {
+              mainContainer.innerHTML = `
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading home content...</p>
+                </div>
+              `;
+          
+              fetch(`tabs/home.html`)
+                .then(response => response.text())
+                .then(results => {
+                  mainContainer.innerHTML = results;
+                  const initFn = window['init_home'];
+                  if (typeof initFn === 'function') {
+                    initFn();
+                  }
+                })
+                .catch(error => {
+                  console.error(error);
+                  mainContainer.innerHTML = `<p class="errorcontact">Failed to load home content: ${error}</p>`;
+                });
             }
-            const { latitude, longitude, name, country } = geoData.results[0];
+        });
 
-            const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
-            const weatherData = await weatherResponse.json();
+        searchButton1.addEventListener('click', async()=>{
+            const checking = searchInputvalues.value.trim()
 
-            const weather = weatherData.current_weather;
+            if(!checking) return;
 
-            const datefo = weather.time.split("T")[0];
-            const timefo = weather.time.split("T")[1];
-
-            countydiv.innerHTML = `<span>🌍City / Country:<utitbest>${name}</utitbest></span>`;
-            firstspan.innerHTML = `🌡️   Temperature: <p>${weather.temperature}&deg;C</p>`;
-            secondspan.innerHTML = `⏰ Date & Time: <p>${datefo} ${timefo}</p>`;
-            thirdspan.innerHTML = `🧭  Wind Direction: <p>${weather.winddirection}&deg;</p>`;
-            fourthspan.innerHTML = `💨  Wind Speed:  <p>${weather.windspeed}km/h</p>`;
-
-            console.log(country, name, weather)
-
-        }catch(error){
-            console.error(error)
-            seconddiv.innerHTML = `<p>Fail to fetch:${error} </p>`;
-        }
-        
-    })
-
-    window.addEventListener('keyup', async(event)=>{
-        if(event.keyCode === 13){
-            searchbuds.click()
-        }
-    })
-   
-    
-
-
-    const ApartMent2 = document.createElement('div')
-    ApartMent2.className = 'ApartMent2';
-    ApartMent2.innerHTML = `
-        <h1>🌧️</h1>
-    `;
-
-    
-
-
-    seconddiv.append(ApartMent1, ApartMent2)
-
-    towrappeBith.append(firstdiv, seconddiv)
-    topdiv.append(towrappeBith)
-    Allweather.append(videoWeather, topdiv)
-
-
-    const otherCountry = document.createElement('div')
-    otherCountry.className = 'otherCountry'
-    const disciples = document.createElement('div')
-    disciples.className = 'disciples';
-    const contentwapp = document.createElement('div')
-    contentwapp.className = 'contentwapp';
-
-    let countries = [];
-    let currentIndex = 0;
-    const batchSize = 10;
-    let isLoading = false;
-
-
-    async function loadCountries() {
-        const response = await fetch('./Countries.json');
-        countries = await response.json();
-        loadNextBatch(); 
-    }
-    
-    async function getWeather(lat, lon) {
-        try {
-            const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-            const data = await response.json();
-            // console.log(data)
-        return data.current_weather;
-        } catch (error) {
-            mainContainer.innerHTML = `<p class="sions"> Errors while fetching request, ${error}. Please reload page</p>`;
-            return null
-        }
-        
-    }
-    
-    // Load the next batch of countries
-    async function loadNextBatch() {
-        if (isLoading || currentIndex >= countries.length) return;
-        isLoading = true;
-        
-
-        const batch = countries.slice(currentIndex, currentIndex + batchSize);
-        mainContainer.appendChild(loader)
-        
-        for (const country of batch) {
-            const weather = await getWeather(country.latitude, country.longitude);
-    
-            const countryDiv = document.createElement('div');
-            countryDiv.className = 'country-card';
-            countryDiv.innerHTML = `
-              <div>
-                  <h3>${country.country}</h3>
-                  <p>🌡️ Temperature: ${weather.temperature}&deg;C</p>
-                  <p>💨 Wind Speed: ${weather.windspeed} km/h</p>
-                  <p>🧭 Wind Direction: ${weather.winddirection}&deg;</p>
-              </div>
+            mainContainer.innerHTML = `
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p>Loading news...</p>
+                </div>
             `;
-            contentwapp.appendChild(countryDiv);
-        }
+            const [worldRes, sportsRes, fashionRes] = await Promise.all([
+                fetch(worldNewsURL),
+                fetch(sportsNewsURL),
+                fetch(fashionNewsURL)
+            ]);
+            const worldNewsData = await worldRes.json();
+            const sportsNewsData = await sportsRes.json();
+            const fashionNewsData = await fashionRes.json();
     
-        disciples.appendChild(contentwapp);
-        otherCountry.appendChild(disciples);
+            
+            const worldnewsObj = worldNewsData.articles.map(article =>({
+                title: article.title,
+                url: article.url,
+                content: article.content,
+                description: article.description || '',
+                image: article.urlToImage || ImagePlaceholder ,
+                source: article.source.name,
+                author: article.author || 'Unknown Author',
+                category:article.category || 'GENERAL',
+                publishedAt: article.publishedAt
+            })) || [];
+                        
+            const sportnewsObj = sportsNewsData.articles.map(article =>({
+                title: article.title,
+                content: article.content,
+                url: article.url,
+                description: article.description || '',
+                image: article.urlToImage || ImagePlaceholder,
+                source: article.source.name,
+                author: article.author || 'Unknown Author',
+                category:article.category || 'TECHNOLOGY',
+                publishedAt: article.publishedAt
+            })) || [];
+                        
+            const fashionnewObj = fashionNewsData.articles.map(article =>({
+                title: article.title,
+                content: article.content,
+                url: article.url,
+                description: article.description || '',
+                image: article.urlToImage || ImagePlaceholder,
+                source: article.source.name,
+                author: article.author || 'Unknown Author',
+                category:article.category || 'FASHION',
+                publishedAt: article.publishedAt
+            })) || [];
+    
+            const AllNews11 = [...worldnewsObj, ...sportnewsObj, ...fashionnewObj]
 
+            const query = checking.toLowerCase();
 
-        if (!mainContainer.contains(Allweather)) {
-            mainContainer.innerHTML = '';
-            mainContainer.append(Allweather, otherCountry);
-        }
-        
-        if (mainContainer.contains(loader)) {
-            loader.remove();
-        }
+            const filteredResults = AllNews11.filter(article =>
+                article.title?.toLowerCase().includes(query) ||
+                article.description?.toLowerCase().includes(query) ||
+                article.content?.toLowerCase().includes(query) ||
+                article.author?.toLowerCase().includes(query)
+            );
 
-        currentIndex += batchSize;
-        isLoading = false;
+            displayArticles(filteredResults)
+        })
+
+    } catch(error) {
+        console.error(error)
+        mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${error}, please reload the page</p>`;
     }
-    
-    // Infinite scroll: detect scroll near bottom
-    // window.addEventListener('scroll', () => {
-    //     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    //     if (scrollTop + clientHeight >= scrollHeight - 150) {
-    //         loadNextBatch();
-    //     }
-    // });
-    window.addEventListener('scroll', () => {
-        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    
-        const scrolledToBottom = scrollTop + clientHeight >= scrollHeight - 150;
-    
-        if (scrolledToBottom) {
-            loadNextBatch();
-        }
-    });
-    
-    window.addEventListener('DOMContentLoaded', () => {
-        const { scrollHeight, clientHeight } = document.documentElement;
-    
-        if (scrollHeight <= clientHeight + 50) {
-            loadNextBatch();
-        }
-    });
-    
-
-    loadCountries();
 }
-
-
-
+function displayArticles(articles) {
+    mainContainer.innerHTML = ''; 
+  
+    if (articles.length === 0) {
+      mainContainer.innerHTML = '<p>No matching articles found.</p>';
+      return;
+    }
+    const searchCon =  document.createElement('div')
+    searchCon.id = 'article1'
+    
+    articles.forEach(article => {
+      const articleEl = document.createElement('div');
+      articleEl.className = 'searchEle';
+  
+      articleEl.innerHTML = `
+        <div class="imagesearch">
+            <img src="${escapeHTML(article.image)}" alt="">
+        </div>
+        <div class="articlesCont">
+            <h3>${escapeHTML(article.title)}</h3>
+            <p><strong>Author:</strong> ${escapeHTML(article.author)}</p>
+            <p>${escapeHTML(article.description)}</p>
+            <a href="${article.url}">Read more</a>
+        </div>
+        <hr/>
+      `; 
+      searchCon.appendChild(articleEl);
+    });
+    mainContainer.appendChild(searchCon)
+}
+function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, match => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    }[match]));
+}
+SearchFormore()
 
 function DateFunction(){
     const DateElement = selector('header .smith_name .smith_name_contents .wantmore_content h3')
@@ -1023,7 +949,49 @@ function DateFunction(){
     const DaysArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     DateElement.innerHTML = DaysArray[days] + ',  ' + MnthsArray[months] +" " + date + ", " + year   
 }
-
 DateFunction()
- 
 
+
+
+window.addEventListener('keydown', (event)=>{
+    const searchbuds = selector('.searchbuds')
+    const searchButton = selector('.searchbar span')
+
+    if(event.key === 'Enter'){
+        const targetId = event.target.id;
+
+        if(targetId === 'generalSearch'){
+            searchButton.click()
+        }
+
+        if(targetId === 'weatherSearch'){
+            searchbuds.click()
+        }
+    }
+})
+
+window.addEventListener('scroll',()=>{
+    if(window.scrollY > 500){
+        ianguages.style.display = 'flex'
+    }else{
+        ianguages.style.display = 'none'
+    }
+})
+
+ianguages.addEventListener('click', ()=>{
+    window.scrollTo({top:0, behavior: "smooth"})
+})
+
+// FOR STUDYING PURPOSES BRO LET BE
+
+// weatherInput.addEventListener('keydown', (event) => {
+//     if (event.key === 'Enter') {
+//       searchbuds.click(); // for weather search
+//     }
+//   });
+  
+//   siteSearchInput.addEventListener('keydown', (event) => {
+//     if (event.key === 'Enter') {
+//       button.click(); // for site-wide search
+//     }
+//   });
