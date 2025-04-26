@@ -178,13 +178,15 @@ async function TopFeedsContents(){
             fetch(sportsNewsURL),
             fetch(fashionNewsURL)
         ]);
+
+        if (!worldRes.ok || !sportsRes.ok || !fashionRes.ok) {
+            throw new Error("One or more API responses failed.");
+        }
+
         const worldNewsData = await worldRes.json();
         const sportsNewsData = await sportsRes.json();
         const fashionNewsData = await fashionRes.json();
-        console.log(worldNewsData)
-        console.log(sportsNewsData)
-        console.log(fashionNewsData)
-        
+
         const worldnewsObj = worldNewsData.articles.map(article =>({
             title: article.title,
             url: article.url,
@@ -432,7 +434,8 @@ async function TopFeedsContents(){
 
     }catch (erro) {
         console.error(erro)
-        mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${erro}, please reload the page or check console</p>`;
+        mainContainer.innerHTML = `<p class="errorcontact">Oops! Something went wrong while fetching news.
+                                     Check your connection or API access. Err Status: ${erro}</p>`;
     }
 }
 
@@ -453,6 +456,10 @@ async function News_Feeds(){
             fetch(sportsNewsURL),
             fetch(fashionNewsURL)
         ]);
+
+        if (!worldRes1.ok || !sportsRes1.ok || !fashionRes1.ok) {
+            throw new Error("One or more API responses failed.");
+        }
         const worldNewsData1 = await worldRes1.json();
         const sportsNewsData1 = await sportsRes1.json();
         const fashionNewsData1 = await fashionRes1.json();
@@ -725,10 +732,13 @@ async function countryweather(){
     async function getWeather(lat, lon) {
         try {
             const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch weather data: ${response.status}`);
+            }
             const data = await response.json();
             return data.current_weather;
         } catch (error) {
-            contentwapp.innerHTML = `<p class="sions"> Errors while fetching request, ${error}. Please reload page</p>`;
+            mainContainer.innerHTML = `<p class="errorcontact"> Errors while fetching request, ${error}. Please reload page</p>`;
             return null
         }
         
@@ -745,7 +755,7 @@ async function countryweather(){
         for (const country of batch) {
             try{
             const weather = await getWeather(country.latitude, country.longitude);
-    
+            // console.log(weather)
             const countryDiv = document.createElement('div');
             countryDiv.className = 'country-card';
             countryDiv.innerHTML = `
@@ -759,7 +769,7 @@ async function countryweather(){
             contentwapp.append(countryDiv);
             }catch(errors){
                 console.error(errors)
-                mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${errors}, please reload the page</p>`;
+                // mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${errors}, please reload the page</p>`;
             }
         }
 
@@ -823,9 +833,10 @@ async function SearchFormore() {
             }
         });
 
-        searchButton1.addEventListener('click', async()=>{
-            const checking = searchInputvalues.value.trim()
+        searchButton1.addEventListener('click', async ()=>{
 
+            const checking = searchInputvalues.value.trim()
+            try{
             if(!checking) return;
 
             mainContainer.innerHTML = `
@@ -834,15 +845,21 @@ async function SearchFormore() {
                     <p>Loading news...</p>
                 </div>
             `;
-            const [worldRes, sportsRes, fashionRes] = await Promise.all([
+            const [worldResq, sportsResq, fashionResq] = await Promise.all([
                 fetch(worldNewsURL),
                 fetch(sportsNewsURL),
                 fetch(fashionNewsURL)
             ]);
-            const worldNewsData = await worldRes.json();
-            const sportsNewsData = await sportsRes.json();
-            const fashionNewsData = await fashionRes.json();
-    
+
+            if (!worldResq.ok || !sportsResq.ok || !fashionResq.ok) {
+                throw new Error("One or more API responses failed.");
+            }
+
+            const worldNewsData = await worldResq.json();
+            const sportsNewsData = await sportsResq.json();
+            const fashionNewsData = await fashionResq.json();
+            
+            
             
             const worldnewsObj = worldNewsData.articles.map(article =>({
                 title: article.title,
@@ -892,11 +909,15 @@ async function SearchFormore() {
             );
 
             displayArticles(filteredResults)
+            }catch(ess){
+                console.error(ess)
+                mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${ess}, please reload the page</p>`;
+            }
         })
 
     } catch(error) {
         console.error(error)
-        mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${error}, please reload the page</p>`;
+        // mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${error}, please reload the page</p>`;
     }
 }
 function displayArticles(articles) {
