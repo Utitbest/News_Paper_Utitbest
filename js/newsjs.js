@@ -176,6 +176,10 @@ async function TopFeedsContents(){
             fetch('/.netlify/functions/getWorldNews'),
             fetch('/.netlify/functions/getSportsNews'),
             fetch('/.netlify/functions/getFashionNews')
+
+            // fetch(worldNewsURL),
+            // fetch(sportsNewsURL),
+            // fetch(fashionNewsURL)
         ]);
 
         if (!worldRes.ok || !sportsRes.ok || !fashionRes.ok) {
@@ -187,10 +191,11 @@ async function TopFeedsContents(){
             sportsRes.json(),
             fashionRes.json()
         ])
+
+        // const worldNewsData = await worldRes.json()
+        // const sportsNewsData = await sportsRes.json()
+        // const fashionNewsData = await fashionRes.json()
    
-        console.log(worldNewsData)
-        console.log(sportsNewsData)
-        console.log(fashionNewsData)
 
         const worldnewsObj = worldNewsData.articles.map(article =>({
             title: article.title,
@@ -457,17 +462,26 @@ async function News_Feeds(){
 
     try{
         const [worldRes1, sportsRes1, fashionRes1] = await Promise.all([
-            fetch(worldNewsURL),
-            fetch(sportsNewsURL),
-            fetch(fashionNewsURL)
+            fetch('/.netlify/functions/getWorldNews'),
+            fetch('/.netlify/functions/getSportsNews'),
+            fetch('/.netlify/functions/getFashionNews')
+
+            // fetch(worldNewsURL),
+            // fetch(sportsNewsURL),
+            // fetch(fashionNewsURL)
         ]);
 
         if (!worldRes1.ok || !sportsRes1.ok || !fashionRes1.ok) {
             throw new Error("One or more API responses failed.");
         }
-        const worldNewsData1 = await worldRes1.json();
-        const sportsNewsData1 = await sportsRes1.json();
-        const fashionNewsData1 = await fashionRes1.json();
+        const [worldNewsData1, sportsNewsData1, fashionNewsData1] = await Promise.all([
+            worldRes1.json(),
+            sportsRes1.json(),
+            fashionRes1.json()
+        ])
+        // const worldNewsData1 = await worldRes1.json();
+        // const sportsNewsData1 = await sportsRes1.json();
+        // const fashionNewsData1 = await fashionRes1.json();
         
         const worldnewsObj1 = worldNewsData1.articles.map(article =>({
             title: article.title,
@@ -505,7 +519,6 @@ async function News_Feeds(){
             publishedAt: article.publishedAt
         })) || [];
 
-        // const AllNews1 = [...worldnewsObj1, ...sportnewsObj1, ...fashionnewObj1]
 
         const FirstFetch = worldnewsObj1.slice(0, 3)
 
@@ -851,18 +864,27 @@ async function SearchFormore() {
                 </div>
             `;
             const [worldResq, sportsResq, fashionResq] = await Promise.all([
-                fetch(worldNewsURL),
-                fetch(sportsNewsURL),
-                fetch(fashionNewsURL)
+                fetch('/.netlify/functions/getWorldNews'),
+                fetch('/.netlify/functions/getSportsNews'),
+                fetch('/.netlify/functions/getFashionNews')
+
+                // fetch(worldNewsURL),
+                // fetch(sportsNewsURL),
+                // fetch(fashionNewsURL)
             ]);
 
             if (!worldResq.ok || !sportsResq.ok || !fashionResq.ok) {
                 throw new Error("One or more API responses failed.");
             }
 
-            const worldNewsData = await worldResq.json();
-            const sportsNewsData = await sportsResq.json();
-            const fashionNewsData = await fashionResq.json();
+            const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
+                worldResq.json(),
+                sportsResq.json(),
+                fashionResq.json()
+            ])
+            // const worldNewsData = await worldResq.json();
+            // const sportsNewsData = await sportsResq.json();
+            // const fashionNewsData = await fashionResq.json();
             
             
             
@@ -978,10 +1000,6 @@ function DateFunction(){
     DateElement.innerHTML = DaysArray[days] + ',  ' + MnthsArray[months] +" " + date + ", " + year   
 }
 DateFunction()
-
-
-
-
 
 window.addEventListener('keydown', (event)=>{
     const searchbuds = selector('.searchbuds')
