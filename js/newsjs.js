@@ -12,8 +12,8 @@ window.addEventListener("load", function () {
 // const UtitbestAPIkey_GNewsApi = '0517399da9fa0881246f4d88bec3297c';                                                            //
 // const UtitbestAPIkey_API_SPORT = '0c4f2e5bc808b34df58cb5cd21d955be';
 // const UtitbestAPIkey_NEW = '3a6da55f29714013a7ae7d0875c9f219';                                                            //
-//                                                                                                                                 //
-// // const worldNewsURL = `https://gnews.io/api/v4/top-headlines?category=general&lang=en&apikey=${UtitbestAPIkey_GNewsApi}`;        //
+// //                                                                                                                                 //
+// // // const worldNewsURL = `https://gnews.io/api/v4/top-headlines?category=general&lang=en&apikey=${UtitbestAPIkey_GNewsApi}`;        //
 // const worldNewsURL = `https://newsapi.org/v2/top-headlines?category=general&apiKey=${UtitbestAPIkey_NEW}`                                 //
 // const sportsNewsURL = `https://newsapi.org/v2/top-headlines?category=technology&apiKey=${UtitbestAPIkey_NEW}`                                 //
 // const fashionNewsURL = `https://newsapi.org/v2/top-headlines?category=entertainment&apiKey=${UtitbestAPIkey_NEW}`  
@@ -32,14 +32,14 @@ const home_tab = selector('#hometab')
 const ImagePlaceholder = 'assets/placeholder-600x317.gif';
 const seletingelement = selector('.contenttag')
 const ianguages = selector('.ianguages')
-
+let Slide_Timer = null;
 
 function NavigationLink(){
     document.addEventListener('DOMContentLoaded', ()=>{
         
         NavChildren.forEach((Numb, indexc)=>{
             Numb.onclick = async function(){
-                
+                INtervalCleaner()
                let nass = document.querySelector('.nass');
                 if(nass){
                     nass.classList.remove('nass');
@@ -159,6 +159,7 @@ function NavigationLink(){
         })
         .catch(error =>{
             console.error(error)
+            INtervalCleaner()
         })
         NavChildren[0].classList.add('nass');
        
@@ -177,7 +178,8 @@ async function TopFeedsContents(){
             NavChildren[2].classList.remove('nass')
             NavChildren[3].classList.remove('nass')
             NavChildren[0].classList.add('nass')
-        }
+    }
+        INtervalCleaner()
     try {
         
         const [worldRes, sportsRes, fashionRes] = await Promise.all([
@@ -243,17 +245,23 @@ async function TopFeedsContents(){
 
         const AllNews = [...worldnewsObj, ...sportnewsObj, ...fashionnewObj]
         
-        const SlideShow = selector('.indicator')
         let startPos = 0
-        let Slide_Timer = setInterval(()=>{
-            if(startPos >= AllNews.length){
-                startPos = 0
-            }
+        const SlideShow = selector('.indicator')
+        if(!Slide_Timer){
+            Slide_Timer = setInterval(()=>{
+                if(startPos >= AllNews.length){
+                    startPos = 0
+                }
+    
+                SlideShow.innerHTML = AllNews[startPos].title;
+                SlideShow.setAttribute('href', AllNews[startPos].url)
+                
+                startPos++;
+            }, 3000)
+        }
+        
 
-            SlideShow.innerHTML = AllNews[startPos].title;
-            SlideShow.setAttribute('href', AllNews[startPos].url)
-            startPos++;
-        }, 3000)
+        
 
         const mainNews = selector('.main-news')
         const DateSplit = AllNews[0].publishedAt.split("T")[0]
@@ -454,6 +462,8 @@ async function TopFeedsContents(){
         console.error(erro)
         mainContainer.innerHTML = `<p class="errorcontact">Oops! Something went wrong while fetching news.
                                      Check your connection or API access. Err Status: ${erro}</p>`;
+        INtervalCleaner()
+        
     }
 }
 
@@ -468,6 +478,7 @@ async function News_Feeds(){
     const ForSport = selector('.ForSport');
     const fashion_stars = selector('.fashion_stars')
 
+    INtervalCleaner()
     try{
         const [worldRes1, sportsRes1, fashionRes1] = await Promise.all([
             fetch('/.netlify/functions/getWorldNews'),
@@ -674,7 +685,7 @@ function init_weather(){
     countryweather()
 }
 async function Weather_Content(){
-
+    INtervalCleaner()
 
     let countydiv = selector('.h1CountryName')
     let firstspan = selector('.weath1')
@@ -830,6 +841,7 @@ async function countryweather(){
 async function SearchFormore() {
     const searchInputvalues = selector('.searchbar input')
     const searchButton1 = selector('.searchbar span')
+
     try {
 
         searchInputvalues.addEventListener('input', () => {
@@ -855,6 +867,7 @@ async function SearchFormore() {
                 .catch(error => {
                   console.error(error);
                   mainContainer.innerHTML = `<p class="errorcontact">Failed to load home content: ${error}</p>`;
+                    INtervalCleaner()
                 });
             }
         });
@@ -947,6 +960,7 @@ async function SearchFormore() {
             }catch(ess){
                 console.error(ess)
                 mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${ess}, please reload the page</p>`;
+                INtervalCleaner()
             }
         })
 
@@ -993,6 +1007,14 @@ function escapeHTML(str) {
       '"': '&quot;',
       "'": '&#039;'
     }[match]));
+}
+function INtervalCleaner(){
+    clearInterval(Slide_Timer)
+    Slide_Timer = null
+    if(Slide_Timer){
+        clearInterval(Slide_Timer)
+        Slide_Timer = null
+    }
 }
 SearchFormore()
 
