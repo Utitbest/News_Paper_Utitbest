@@ -170,6 +170,7 @@ function init_home() {
     TopFeedsContents();
 }
 async function TopFeedsContents(){
+    NavChildren[0].classList.add('nass');
     try {
         
         const [worldRes, sportsRes, fashionRes] = await Promise.all([
