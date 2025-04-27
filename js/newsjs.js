@@ -170,7 +170,14 @@ function init_home() {
     TopFeedsContents();
 }
 async function TopFeedsContents(){
-    NavChildren[0].classList.add('nass');
+    if(NavChildren[1].classList.contains('nass') || 
+        NavChildren[2].classList.contains('nass') ||
+        NavChildren[3].classList.contains('nass')){
+            NavChildren[1].classList.remove('nass')
+            NavChildren[2].classList.remove('nass')
+            NavChildren[3].classList.remove('nass')
+            NavChildren[0].classList.add('nass')
+        }
     try {
         
         const [worldRes, sportsRes, fashionRes] = await Promise.all([
