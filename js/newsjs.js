@@ -17,7 +17,6 @@ const UtitbestAPIkey_NEW = '3a6da55f29714013a7ae7d0875c9f219';                  
 const worldNewsURL = `https://newsapi.org/v2/top-headlines?category=general&apiKey=${UtitbestAPIkey_NEW}`                                 //
 const sportsNewsURL = `https://newsapi.org/v2/top-headlines?category=technology&apiKey=${UtitbestAPIkey_NEW}`                                 //
 const fashionNewsURL = `https://newsapi.org/v2/top-headlines?category=entertainment&apiKey=${UtitbestAPIkey_NEW}`  
-const url1 = `https://newsapi.org/v2/top-headlines?sources=bbc-news,cnn&pageSize=5&apiKey=${UtitbestAPIkey_NEW}`; //
 //////////////////////////////////////////////////////// NO-GO AREA //////////////////////////////////////////////////////////////
 
 
@@ -174,18 +173,24 @@ async function TopFeedsContents(){
     try {
         
         const [worldRes, sportsRes, fashionRes] = await Promise.all([
-            fetch(worldNewsURL),
-            fetch(sportsNewsURL),
-            fetch(fashionNewsURL)
+            fetch('/.netlify/functions/getWorldNews'),
+            fetch('/.netlify/functions/getSportsNews'),
+            fetch('/.netlify/functions/getFashionNews')
         ]);
 
         if (!worldRes.ok || !sportsRes.ok || !fashionRes.ok) {
             throw new Error("One or more API responses failed.");
         }
 
-        const worldNewsData = await worldRes.json();
-        const sportsNewsData = await sportsRes.json();
-        const fashionNewsData = await fashionRes.json();
+        const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
+            worldRes.json(),
+            sportsRes.json(),
+            fashionRes.json()
+        ])
+   
+        console.log(worldNewsData)
+        console.log(sportsNewsData)
+        console.log(fashionNewsData)
 
         const worldnewsObj = worldNewsData.articles.map(article =>({
             title: article.title,
