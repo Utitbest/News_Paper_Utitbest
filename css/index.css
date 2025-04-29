@@ -1,4 +1,3 @@
-@import url("SeconIndex.css");
 :root{
     --darkblue-color: #1c2241;
     --yellow-color: #eac434;
@@ -25,11 +24,20 @@ html::-webkit-scrollbar-thumb{
 }
 html{
     scroll-behavior: smooth;
+    overflow-y: scroll;
+}
+html::-webkit-scrollbar{
+    display: none;
 }
 body{
     height: 100lvh;
     position: relative;
 }
+
+.BarNav{
+    display: none;
+}
+
 h5{
     font-family: "Alegreya", sans-serif !important;
 }
@@ -85,6 +93,7 @@ header .smith_name .smith_name_contents{
 header .smith_name .smith_name_contents h1{
     font-weight: 800;
     color: white;
+    cursor: pointer;
 }
 header .smith_name .smith_name_contents h1 span{
     font-weight: 400;
@@ -106,6 +115,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut{
     display: flex;
     align-items: center;
     padding: 10px 14px;
+    text-decoration: none  ;
     gap: 5px;
 }
 header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
@@ -113,19 +123,39 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     font-weight: 600;
     color: var(--darkblue-color);
 }
-
+.swe{
+    color: var(--darkblue-color);
+}
 .wrapperForsmall{
     display: flex;
     width: 100%;
     flex-direction: column;
     gap: .6em;
 }
-
-
+.newnavholder{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+.navstyle1{
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    padding:8px 20px ;
+    background-color: #fff;
+    box-shadow:-1px 5px 6px 0px #d8d8d8;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.navstyle1 .siteicons1 img{
+    width: 2.7em;
+    cursor: pointer;
+}
 .navstyle{
-    position: sticky;
-    top: 0;
-    left: 0;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -134,6 +164,10 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     padding: 20px ;
     background-color: #fff;
     box-shadow:-1px 5px 6px 0px #d8d8d8;
+    transition: all 1.2s cubic-bezier(.3,.96,.59,.95);
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 .navstyle .siteicons{
     height: 40px;
@@ -143,6 +177,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
 .navstyle .siteicons img{
     height: auto;
     width: 100%;
+    cursor: pointer;
 }
 .navstyle ul{
     display: flex;
@@ -177,7 +212,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     transform: scale(1.19);
     transition: 0.4s ease;
 }
-.navstyle .searchbar{
+.searchbar{
     display: flex;
     align-items: center;
     border: solid 1px grey;
@@ -186,7 +221,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     height: 2.1em;
     border-radius:4px ;
 }
-.navstyle .searchbar input{
+ .searchbar input{
     outline: none;
     border: none;
     padding: .5em 10px .5em 14px;
@@ -194,7 +229,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     font-weight: 600;
     color: var(--grat-color-);
 }
-.navstyle .searchbar span{
+ .searchbar span{
     display: flex;
     justify-self: center;
     align-items: center;
@@ -203,7 +238,7 @@ header .smith_name .smith_name_contents .wantmore_content .wallnut h3{
     cursor: pointer;
     padding: 0 .6em;
 } 
-.navstyle .searchbar span .bb{
+.searchbar span .bb{
     color: var(--grey-color);
     font-size: initial;
 }
@@ -564,6 +599,7 @@ main{
     /* background-color: var(--grey-color); */
     flex-direction: column;
     display: flex;
+    padding: 0 .5em;
     align-items: center;
     box-shadow: 1px 0px 4px 1px #c8c8c8;
 }
@@ -1010,7 +1046,6 @@ footer .rightandhonnor p{
     text-decoration: underline;
     color: var(--darkblue-color);
 }
-
 .secondMainMan{
     width: 100%;
     height: 150px;
@@ -1018,4 +1053,753 @@ footer .rightandhonnor p{
     flex-direction: column;
     background-color: var(--grey-color);
     cursor: pointer;
+}
+.secondMainMan .addver{
+    width: 100%;
+    height:100% ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.secondMainMan .addver h6{
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: var(--grat-color-);
+    height: 20%;
+    text-align: right;
+    width: 60%;
+}
+.secondMainMan .addver img{
+    width: auto;
+}
+.worldNewsonly{
+    width: 100%;
+    display: flex;
+    height: auto;
+    border-top: 1px solid var(--darkblue-color);
+    margin-top: 1em;
+    flex-direction: column;
+}
+
+.worldNewsonly .forworldnewsh2{
+    width: 100%;
+    font-family: "Alegreya", sans-serif;
+    color: var(--darkblue-color);
+}
+.worldNewsonlywrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+}
+.worldNewsonlywrapper .wrappnewsMain{
+    width: 100%;
+    display: flex;
+    height: 100%;
+}
+.seniorwrapper{
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    padding: 0 11px;
+    min-height: 300px;
+    height: 300px;
+}
+.seniorwrapper .forimagenews {
+    width: 50%;
+    overflow: hidden;
+    position: relative;
+    
+}
+.seniorwrapper .forimagenews img{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    /* position: relative; */
+}
+
+.forimagenews-concs{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.peace-unto{
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-end;
+    position: relative;
+    background:linear-gradient(360deg, rgba(85, 85, 85, 0.486), rgb(255 255 255 / 0%), rgb(255 255 255 / 0%));
+}
+.softman{
+    padding: 0 1em;
+    position: absolute;
+    bottom: 24px;
+} 
+.softman h2{
+    color: var(--grey-color);
+    font-family: "Alegreya", sans-serif;
+    font-size: 17px;
+}
+.softman h5{
+    color: var(--grey-color);
+    font-family: "Alegreya", sans-serif;
+    font-size: 10px;
+    font-weight: lighter;
+}
+.fortextparagram{
+    width: 50%;
+    height: 100%;
+    padding: .6em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.fortextparagram h2{
+    font-family: "Alegreya", sans-serif;
+    color: var(--darkblue-color);
+    font-size: 2em;
+    line-height: 30px;
+}
+.fortextparagram h5{
+    font-family: "Alegreya", sans-serif;
+    color: var(--grat-color-);
+    font-size: 11px;
+}
+.fortextparagram h5 .andwe{
+    color: var(--darkblue-color);
+}
+.fortextparagram p{
+    font-size: 15px;
+    font-family: "Inter", sans-serif;
+    color:   rgb(27, 26, 26);
+    text-shadow: 0px 1px 1px #0a0a0a;
+}
+
+.otherNewsworldnews{
+    width: 100%;
+    display: flex;
+    background-color: var(--grey-color);
+    height: auto;
+}
+.otherNewsworldnews > div{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+    justify-content: space-evenly;
+    /* gap: 20px; */
+}
+.containersnewsworld{
+    width: 200px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin: .3em;
+    text-decoration: none;
+}
+.No-image{
+    width: 100%;
+    height: auto;
+    display: flex;
+    overflow: hidden;
+}
+.No-image img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+.textonecs h3{
+    font-family: "Alegreya", sans-serif;
+    font-size:14px;
+    color: rgb(27, 26, 26);
+}
+.textonecs h5{
+    font-size: 10px;
+    font-family: 'Inter', sans-serif;
+    color: var(--darkblue-color);
+
+}
+.anotherAdvert{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    background-color: var(--grey-color);
+    justify-content: center;
+}
+.anotherAdvert img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.fortoborns{
+    width: 100%;
+    margin-top: 1.2em;
+    margin-bottom: 1.2em;
+    display: flex;
+    height: auto;
+    align-items: center;
+    padding-left: 1em;
+    /* padding-top:.2em ; */
+
+    border-top: 1px solid var(--darkblue-color);
+    border-bottom: 1px solid var(--darkblue-color);
+    background-color: var(--grey-color);
+}
+.fortoborns .sporth3{
+    font-family: "Alegreya", sans-serif;
+    text-align: left;
+    font-size: 1em;
+    color: var(--grey-color);
+    padding: .5em;
+    font-weight: 600;
+    background-color: var(--darkblue-color);
+}
+.jjs{
+    padding: 0 1em !important;
+}
+
+
+main .worldOfSport-fashion{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+.supportwrapper{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.contentwwaper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.imagrag{
+    overflow: hidden;
+}
+.imagrag img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+.fornewsconns{
+    flex-direction: column;
+    display: flex;
+    gap: .6em;
+    padding: .8em;
+    text-align: left;
+    justify-content: center;
+}
+.fornewsconns h2{
+    font-family: "Alegreya", sans-serif;
+    font-size: 1.2em;
+    color: var(--darkblue-color);
+}
+.fornewsconns h5{
+    font-family: "Alegreya", sans-serif;
+    font-size: 11px;
+    color:var(--darkblue-color);
+}
+.fornewsconns .poststatus{
+    color: rgb(27, 26, 26);
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+}
+
+.ForFashion{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.trike{
+    width: 100%;
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    margin-bottom: .8em;
+}
+.trike .Alligience1{
+    width: 100%;
+    overflow: hidden;
+}
+.trike .Alligience1 img{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.trike .Alligience2 h2{
+    font-family: "Alegreya", sans-serif;
+    font-size: 1em;
+    color: rgb(27, 26, 26);
+}
+.trike .Alligience2 h5{
+    font-family: "Alegreya", sans-serif;
+    font-size: 11px;
+    color: var(--darkblue-color);
+}
+.Allweather{
+    width: 100%;
+    height: 300px;
+    display: flex;
+    position: relative;
+}
+.Allweather video{
+    width: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.Allweather > div{
+    position: absolute;
+    display: flex;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #5f61618a;
+}
+.towrappeBith{
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    padding: .7em;
+}
+.firstdiv{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.firstdiv > div{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--grey-color);
+    border-radius: 10px;
+    overflow: hidden;
+    height: 40px;
+}
+.firstdiv > div > input{
+    background: none;
+    outline: none;
+    border: none;
+    flex: 1;
+    padding: 1em ;
+    color: gray;
+    font-family: 'Alegreya', sans-serif;
+}
+.searchbuds{
+    height: 100%;
+    width: 40px;
+    background-color: var(--darkblue-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.kkd{
+    color: var(--grey-color);
+}
+.seconddiv{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: .7em;
+}
+.ApartMent1{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.ApartMent1 span{
+    font-weight: 600;
+    font-family: "Alegreya", sans-serif;
+    font-size: 17px;
+    color: var(--grey-color);
+    text-shadow: 2px 1px 1px #5b5b5b;
+    display: flex;
+    align-items: center;
+    gap: .6em;
+}
+.ApartMent1 span p{
+    color: var(--yellow-color);
+    font-weight: 600;
+    font-family: "Alegreya", sans-serif;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+}
+.h1CountryName{
+    display: flex;
+    align-items: center;
+}
+.h1CountryName span{
+    color: var(--grey-color);
+    font-family: "Alegreya", sans-serif;
+    text-shadow: 2px 1px 1px #5b5b5b;
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.h1CountryName utitbest{
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--yellow-color);
+}
+.ApartMent2{
+    align-items: start;
+    display: flex;
+}
+.ApartMent2 h1{
+    font-size: 8em;
+    outline: none;
+    border: none;
+    transform: rotate(20deg);
+}
+.otherCountry{
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+.disciples{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.contentwapp{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: .8em;
+    position: relative;
+    padding: 1em;
+    justify-content: center;
+}
+.country-card{
+    padding: .4em .4em;
+    display: flex;
+    border-radius: .2em;
+    overflow: hidden;
+    background-color: var(--grey-color);
+    box-shadow:1px 2px 6px 0px rgb(137 136 136);
+}
+.country-card > div{
+    display: flex;
+    flex-direction: column;
+}
+.sions{
+    font-size: 15px;
+    color:var(--darkblue-color);
+    font-weight: 600;
+    font-family: "Alegreya", sans-serif;
+    display: flex;
+    height: 17em;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;    
+}
+.divNoclass{
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.scu{
+    color: var(--yellow-color);
+}
+
+.loading-spinner1::after {
+    content: '';
+    display: block;
+    margin: 10px auto;
+    width: 30px;
+    height: 30px;
+    border: 4px solid #ccc;
+    border-top-color: #3498db;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+.advertcontainer3{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    margin: .5em 0;
+}
+.advertcontainer3 .jecues{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.advertcontainer3 .jecues img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.news_Section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.weather_section{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.errorcontact{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5em 0;
+    padding: 0 1.5em;
+    font-weight: 600;
+    font-family: "Alegreya", sans-serif;
+    color: rgb(224, 45, 13);
+}
+#article1{
+    display: flex;
+    width: 100%;
+    padding: 0 2em;
+    gap: .1em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    flex-direction: column;
+}
+
+#article1 .searchEle{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: .4em;
+}
+#article1 .searchEle .imagesearch{
+    height: 100%;
+    width: 30%;
+    display: flex;
+    overflow: hidden;
+}
+
+#article1 .searchEle .imagesearch img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+#article1 .searchEle .articlesCont{
+    height: auto;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+.loasdi,
+.loasdi1{
+    box-shadow: inset 1px 1px 5px 0 gray;
+}
+.main-news.loasdi::before{
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px; height: 30px;
+    border: 4px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.side-news.loasdi1::before{
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 30px; height: 30px;
+    border: 4px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin1 1s linear infinite;
+}
+
+.forimagenews.loasdi1::before{
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 30px; height: 30px;
+    border: 4px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin1 1s linear infinite;
+}
+
+.showself {
+    max-height: 500px !important; 
+    opacity: 1 !important;
+    padding:0 0 11px 23px !important;
+}
+
+@keyframes spin1 {
+    to { transform: rotate(360deg); }
+}
+
+
+@media(max-width: 990px){
+    .absoluteside-content h4{
+        font-size: 12px ;
+    }
+}
+@media(max-width: 830px){
+    #hometab .editorspicksworks{
+        display: flex !important;
+        flex-direction: column;
+    }
+}
+@media(max-width: 800px){
+    #hometab .topnotch{
+        height: auto !important;
+        max-height:unset !important ;
+        display: flex !important;
+        flex-direction: column;
+    }
+}
+
+@media(max-width: 780px){
+    
+    .navstyle {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.6s ease-in-out;
+        padding: 0 ;
+        align-items: baseline;
+    }
+    
+    .dkde9{
+        color: var(--darkblue-color);
+        font-size: 1.7em;
+    }
+    .BarNav{
+        display: flex !important;
+        cursor: pointer;
+    }
+    .navstyle ul{
+        flex-direction: column;
+    }
+    .navstyle .social_media{
+        margin: .5em 0;
+        gap: 30px;
+    }
+    
+    .navstyle .siteicons{
+        display: none;
+    }
+    .navstyle .siteicons img{
+        width: 2.7em !important;
+    }
+    .navstyle1{
+        display: flex !important;
+    }
+}
+@media(max-width: 770px){
+    header .smith_name .smith_name_contents{
+        flex-direction: column !important;
+    }
+    header .smith_name .smith_name_contents h1{
+        width: 100% !important;
+    }
+    header .smith_name .smith_name_contents .wantmore_content {
+        width: 100%;
+    }
+    .daysof {
+        font-size: 25px !important;
+    }
+    header .smith_name .smith_name_contents .wantmore_content{
+        justify-content: space-between !important;
+    }
+
+}
+@media(max-width: 640px){
+    .bearer .matters{
+        display: flex !important;
+        flex-direction: column;
+    }
+}
+@media(max-width: 600px){
+    #hometab .topnotch .main-news{
+        height: 20em !important;
+    }
+    .side-news{
+        max-height: unset !important;
+        display: flex !important;
+        flex-direction: column;
+        height: auto;
+    }
+    #hometab .topnotch .side-news .fourplate{
+        height: 20em;
+    }
+    .absoluteside-content h4{
+        font-size: 14px !important;
+    }
+    #hometab .vidownew .videSet{
+        overflow-x: auto !important;
+    }
+}
+@media(max-width: 570px){
+    .daysof{
+        font-size: 20px !important;
+    }
+    header .smith_name .smith_name_contents .wantmore_content .wallnut{
+        padding: 7px !important;
+    }
+    .h1CountryName span{
+        font-size: 1.2em;
+    }
+    .ApartMent1 span {
+        font-size: 15px;
+    }
+}
+@media(max-width: 460px){
+    .rrtrr{
+        display: none !important;
+    }
+    header .smith_name .smith_name_contents h1{
+        font-size: 1.6em !important;
+    }
+}
+@media(max-width: 360px){
+    header .smith_name .smith_name_contents .wantmore_content{
+        flex-direction:column !important;
+        align-items:baseline !important;
+    }
 }

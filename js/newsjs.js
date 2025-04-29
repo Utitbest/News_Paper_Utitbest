@@ -187,32 +187,32 @@ async function TopFeedsContents(){
             NavChildren[3].classList.remove('nass')
             NavChildren[0].classList.add('nass')
     }
-        INtervalCleaner()
+    INtervalCleaner()
     try {
         
         const [worldRes, sportsRes, fashionRes] = await Promise.all([
-            // fetch('/.netlify/functions/getWorldNews'),
-            // fetch('/.netlify/functions/getSportsNews'),
-            // fetch('/.netlify/functions/getFashionNews')
+            fetch('/.netlify/functions/getWorldNews'),
+            fetch('/.netlify/functions/getSportsNews'),
+            fetch('/.netlify/functions/getFashionNews')
 
-            fetch(worldNewsURL),
-            fetch(sportsNewsURL),
-            fetch(fashionNewsURL)
+            // fetch(worldNewsURL),
+            // fetch(sportsNewsURL),
+            // fetch(fashionNewsURL)
         ]);
 
         if (!worldRes.ok || !sportsRes.ok || !fashionRes.ok) {
             throw new Error("One or more API responses failed.");
         }
 
-        // const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
-        //     worldRes.json(),
-        //     sportsRes.json(),
-        //     fashionRes.json()
-        // ])
+        const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
+            worldRes.json(),
+            sportsRes.json(),
+            fashionRes.json()
+        ])
 
-        const worldNewsData = await worldRes.json()
-        const sportsNewsData = await sportsRes.json()
-        const fashionNewsData = await fashionRes.json()
+        // const worldNewsData = await worldRes.json()
+        // const sportsNewsData = await sportsRes.json()
+        // const fashionNewsData = await fashionRes.json()
    
 
         const worldnewsObj = worldNewsData.articles.map(article =>({
@@ -489,26 +489,26 @@ async function News_Feeds(){
     INtervalCleaner()
     try{
         const [worldRes1, sportsRes1, fashionRes1] = await Promise.all([
-            // fetch('/.netlify/functions/getWorldNews'),
-            // fetch('/.netlify/functions/getSportsNews'),
-            // fetch('/.netlify/functions/getFashionNews')
+            fetch('/.netlify/functions/getWorldNews'),
+            fetch('/.netlify/functions/getSportsNews'),
+            fetch('/.netlify/functions/getFashionNews')
 
-            fetch(worldNewsURL),
-            fetch(sportsNewsURL),
-            fetch(fashionNewsURL)
+            // fetch(worldNewsURL),
+            // fetch(sportsNewsURL),
+            // fetch(fashionNewsURL)
         ]);
 
         if (!worldRes1.ok || !sportsRes1.ok || !fashionRes1.ok) {
             throw new Error("One or more API responses failed.");
         }
-        // const [worldNewsData1, sportsNewsData1, fashionNewsData1] = await Promise.all([
-        //     worldRes1.json(),
-        //     sportsRes1.json(),
-        //     fashionRes1.json()
-        // ])
-        const worldNewsData1 = await worldRes1.json();
-        const sportsNewsData1 = await sportsRes1.json();
-        const fashionNewsData1 = await fashionRes1.json();
+        const [worldNewsData1, sportsNewsData1, fashionNewsData1] = await Promise.all([
+            worldRes1.json(),
+            sportsRes1.json(),
+            fashionRes1.json()
+        ])
+        // const worldNewsData1 = await worldRes1.json();
+        // const sportsNewsData1 = await sportsRes1.json();
+        // const fashionNewsData1 = await fashionRes1.json();
         
         const worldnewsObj1 = worldNewsData1.articles.map(article =>({
             title: article.title,
@@ -875,9 +875,18 @@ function resetCountryWeather() {
 }
 
 function Navdropdown(){
+    const searchInputvalues1 = selector('.searchbar')
     NavDropDown.onclick =()=>{
         navstyle.classList.toggle('showself')
     }
+    document.addEventListener('click', (w)=>{
+        searchInputvalues1.addEventListener('click', (even)=>{
+            even.stopPropagation()
+        })
+        if(!NavDropDown.contains(w.target) ){
+            navstyle.classList.remove('showself')
+        }
+    })
 }
 
 async function SearchFormore() {
@@ -885,8 +894,8 @@ async function SearchFormore() {
     const searchButton1 = selector('.searchbar span')
 
     try {
-
-        searchInputvalues.addEventListener('input', () => {
+        searchInputvalues.addEventListener('input', (event) => {
+            event.stopPropagation()
             const value = searchInputvalues.value.trim();
           
             if (value === '') {
@@ -927,28 +936,28 @@ async function SearchFormore() {
                 </div>
             `;
             const [worldResq, sportsResq, fashionResq] = await Promise.all([
-                // fetch('/.netlify/functions/getWorldNews'),
-                // fetch('/.netlify/functions/getSportsNews'),
-                // fetch('/.netlify/functions/getFashionNews')
+                fetch('/.netlify/functions/getWorldNews'),
+                fetch('/.netlify/functions/getSportsNews'),
+                fetch('/.netlify/functions/getFashionNews')
 
-                fetch(worldNewsURL),
-                fetch(sportsNewsURL),
-                fetch(fashionNewsURL)
+                // fetch(worldNewsURL),
+                // fetch(sportsNewsURL),
+                // fetch(fashionNewsURL)
             ]);
 
             if (!worldResq.ok || !sportsResq.ok || !fashionResq.ok) {
                 throw new Error("One or more API responses failed.");
             }
 
-            // const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
-            //     worldResq.json(),
-            //     sportsResq.json(),
-            //     fashionResq.json()
-            // ])
+            const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
+                worldResq.json(),
+                sportsResq.json(),
+                fashionResq.json()
+            ])
 
-            const worldNewsData = await worldResq.json();
-            const sportsNewsData = await sportsResq.json();
-            const fashionNewsData = await fashionResq.json();
+            // const worldNewsData = await worldResq.json();
+            // const sportsNewsData = await sportsResq.json();
+            // const fashionNewsData = await fashionResq.json();
             
             
             
