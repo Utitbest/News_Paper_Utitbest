@@ -32,7 +32,18 @@ const home_tab = selector('#hometab')
 const ImagePlaceholder = 'assets/placeholder-600x317.gif';
 const seletingelement = selector('.contenttag')
 const ianguages = selector('.ianguages')
+const siteName = selector('.siteName');
+const siteicons = selector('.siteicons img')
+const siteicons1 = selector('.navstyle1 .siteicons1 img')
+const NavDropDown = selector('.BarNav')
+const navstyle = selector('.navstyle')
 let Slide_Timer = null;
+
+let countries = [];
+let currentIndex = 0;
+const batchSize = 10;
+let isLoading = false;
+
 
 function NavigationLink(){
     document.addEventListener('DOMContentLoaded', ()=>{
@@ -40,6 +51,7 @@ function NavigationLink(){
         NavChildren.forEach((Numb, indexc)=>{
             Numb.onclick = async function(){
                 INtervalCleaner()
+                resetCountryWeather()
                let nass = document.querySelector('.nass');
                 if(nass){
                     nass.classList.remove('nass');
@@ -128,10 +140,6 @@ function NavigationLink(){
                         .then(results =>{
                             mainContainer.innerHTML = ''
                             mainContainer.innerHTML = results;
-                            // const initweath = window[`init_weather`];
-                            //     if (typeof initweath === "function") {
-                            //         initweath(); 
-                            //     }
                         })
                         .catch(error =>{
                             console.error(error)
@@ -183,28 +191,28 @@ async function TopFeedsContents(){
     try {
         
         const [worldRes, sportsRes, fashionRes] = await Promise.all([
-            fetch('/.netlify/functions/getWorldNews'),
-            fetch('/.netlify/functions/getSportsNews'),
-            fetch('/.netlify/functions/getFashionNews')
+            // fetch('/.netlify/functions/getWorldNews'),
+            // fetch('/.netlify/functions/getSportsNews'),
+            // fetch('/.netlify/functions/getFashionNews')
 
-            // fetch(worldNewsURL),
-            // fetch(sportsNewsURL),
-            // fetch(fashionNewsURL)
+            fetch(worldNewsURL),
+            fetch(sportsNewsURL),
+            fetch(fashionNewsURL)
         ]);
 
         if (!worldRes.ok || !sportsRes.ok || !fashionRes.ok) {
             throw new Error("One or more API responses failed.");
         }
 
-        const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
-            worldRes.json(),
-            sportsRes.json(),
-            fashionRes.json()
-        ])
+        // const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
+        //     worldRes.json(),
+        //     sportsRes.json(),
+        //     fashionRes.json()
+        // ])
 
-        // const worldNewsData = await worldRes.json()
-        // const sportsNewsData = await sportsRes.json()
-        // const fashionNewsData = await fashionRes.json()
+        const worldNewsData = await worldRes.json()
+        const sportsNewsData = await sportsRes.json()
+        const fashionNewsData = await fashionRes.json()
    
 
         const worldnewsObj = worldNewsData.articles.map(article =>({
@@ -481,26 +489,26 @@ async function News_Feeds(){
     INtervalCleaner()
     try{
         const [worldRes1, sportsRes1, fashionRes1] = await Promise.all([
-            fetch('/.netlify/functions/getWorldNews'),
-            fetch('/.netlify/functions/getSportsNews'),
-            fetch('/.netlify/functions/getFashionNews')
+            // fetch('/.netlify/functions/getWorldNews'),
+            // fetch('/.netlify/functions/getSportsNews'),
+            // fetch('/.netlify/functions/getFashionNews')
 
-            // fetch(worldNewsURL),
-            // fetch(sportsNewsURL),
-            // fetch(fashionNewsURL)
+            fetch(worldNewsURL),
+            fetch(sportsNewsURL),
+            fetch(fashionNewsURL)
         ]);
 
         if (!worldRes1.ok || !sportsRes1.ok || !fashionRes1.ok) {
             throw new Error("One or more API responses failed.");
         }
-        const [worldNewsData1, sportsNewsData1, fashionNewsData1] = await Promise.all([
-            worldRes1.json(),
-            sportsRes1.json(),
-            fashionRes1.json()
-        ])
-        // const worldNewsData1 = await worldRes1.json();
-        // const sportsNewsData1 = await sportsRes1.json();
-        // const fashionNewsData1 = await fashionRes1.json();
+        // const [worldNewsData1, sportsNewsData1, fashionNewsData1] = await Promise.all([
+        //     worldRes1.json(),
+        //     sportsRes1.json(),
+        //     fashionRes1.json()
+        // ])
+        const worldNewsData1 = await worldRes1.json();
+        const sportsNewsData1 = await sportsRes1.json();
+        const fashionNewsData1 = await fashionRes1.json();
         
         const worldnewsObj1 = worldNewsData1.articles.map(article =>({
             title: article.title,
@@ -744,12 +752,8 @@ async function Weather_Content(){
         
     })
 }
-async function countryweather(){
-    let countries = [];
-    let currentIndex = 0;
-    const batchSize = 10;
-    let isLoading = false;
 
+async function countryweather() {
     const loader = document.createElement('div');
     loader.className = 'loading-spinner1';
     loader.style.cssText = `
@@ -758,14 +762,33 @@ async function countryweather(){
         padding: 15px;
         color: #444;
     `;
-    const contentwapp = selector('.contentwapp')
-    const disciples = selector('.disciples')
+
+    const loadMoreButton = document.createElement('button');
+    loadMoreButton.textContent = 'Load More Countries';
+    loadMoreButton.className = 'load-more-button';
+    loadMoreButton.style.cssText = `
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-size: 1rem;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    `;
+
+    const contentwapp = selector('.contentwapp');
+    const disciples = selector('.disciples');
+
     async function loadCountries() {
         const response = await fetch('./Countries.json');
         countries = await response.json();
+        contentwapp.after(loadMoreButton); 
+        loadMoreButton.addEventListener('click', loadNextBatch);
         loadNextBatch(); 
     }
-    
+
     async function getWeather(lat, lon) {
         try {
             const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
@@ -775,67 +798,86 @@ async function countryweather(){
             const data = await response.json();
             return data.current_weather;
         } catch (error) {
-            mainContainer.innerHTML = `<p class="errorcontact"> Errors while fetching request, ${error}. Please reload page</p>`;
-            return null
+            contentwapp.innerHTML = `<p class="errorcontact"> Errors while fetching request: ${error}. Please reload page</p>`;
+            return null;
         }
-        
     }
-    
-    // Load the next batch of countries
+
     async function loadNextBatch() {
         if (isLoading || currentIndex >= countries.length) return;
         isLoading = true;
-        
-        
-        const batch = countries.slice(currentIndex, currentIndex + batchSize);
+
         disciples.insertBefore(loader, disciples.children[1]);
+
+        const batch = countries.slice(currentIndex, currentIndex + batchSize);
+
         for (const country of batch) {
-            try{
-            const weather = await getWeather(country.latitude, country.longitude);
-            // console.log(weather)
-            const countryDiv = document.createElement('div');
-            countryDiv.className = 'country-card';
-            countryDiv.innerHTML = `
-              <div>
-                  <h3>${country.country}</h3>
-                  <p>🌡️ Temperature: ${weather.temperature}&deg;C</p>
-                  <p>💨 Wind Speed: ${weather.windspeed} km/h</p>
-                  <p>🧭 Wind Direction: ${weather.winddirection}&deg;</p>
-              </div>
-            `;
-            contentwapp.append(countryDiv);
-            }catch(errors){
-                console.error(errors)
-                // mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${errors}, please reload the page</p>`;
+            try {
+                const weather = await getWeather(country.latitude, country.longitude);
+
+                const countryDiv = document.createElement('div');
+                countryDiv.className = 'country-card';
+                countryDiv.innerHTML = `
+                  <div>
+                      <h3>${country.country}</h3>
+                      <p>🌡️ Temperature: ${weather.temperature}&deg;C</p>
+                      <p>💨 Wind Speed: ${weather.windspeed} km/h</p>
+                      <p>🧭 Wind Direction: ${weather.winddirection}&deg;</p>
+                  </div>
+                `;
+                contentwapp.append(countryDiv);
+            } catch (errors) {
+                console.error(errors);
             }
         }
 
-        if(disciples.contains(loader)){
-            loader.remove()
+        if (disciples.contains(loader)) {
+            loader.remove();
         }
+
         currentIndex += batchSize;
         isLoading = false;
-    }
-    
-    window.addEventListener('scroll', () => {
-        const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    
-        const scrolledToBottom = scrollTop + clientHeight >= scrollHeight - 150;
-    
-        if (scrolledToBottom) {
-            loadNextBatch();
-        }
-    });
-    
-    window.addEventListener('DOMContentLoaded', () => {
-        const { scrollHeight, clientHeight } = document.documentElement;
-    
-        if (scrollHeight <= clientHeight + 50) {
-            loadNextBatch();
-        }
-    });
-    loadCountries();
 
+        if (currentIndex >= countries.length) {
+            
+            loadMoreButton.remove();
+            const doneMessage = document.createElement('div');
+            doneMessage.className = 'done-loading';
+            doneMessage.style.cssText = `
+                text-align: center;
+                padding: 20px;
+                font-size: 1.2rem;
+                color: green;
+                animation: fadeIn 1s ease forwards;
+            `;
+            doneMessage.textContent = "✅ All countries loaded successfully!";
+            contentwapp.appendChild(doneMessage);
+        }
+    }
+
+    loadCountries();
+}
+function resetCountryWeather() {
+    countries = [];
+    currentIndex = 0;
+    isLoading = false;
+    const contentwapp = selector('.contentwapp');
+    if (contentwapp) {
+        contentwapp.innerHTML = '';
+    }
+    const disciples = selector('.disciples');
+    if (disciples) {
+        const oldLoader = disciples.querySelector('.loading-spinner1');
+        if (oldLoader) oldLoader.remove();
+    }
+    const oldButton = document.querySelector('.load-more-button');
+    if (oldButton) oldButton.remove();
+}
+
+function Navdropdown(){
+    NavDropDown.onclick =()=>{
+        navstyle.classList.toggle('showself')
+    }
 }
 
 async function SearchFormore() {
@@ -885,27 +927,28 @@ async function SearchFormore() {
                 </div>
             `;
             const [worldResq, sportsResq, fashionResq] = await Promise.all([
-                fetch('/.netlify/functions/getWorldNews'),
-                fetch('/.netlify/functions/getSportsNews'),
-                fetch('/.netlify/functions/getFashionNews')
+                // fetch('/.netlify/functions/getWorldNews'),
+                // fetch('/.netlify/functions/getSportsNews'),
+                // fetch('/.netlify/functions/getFashionNews')
 
-                // fetch(worldNewsURL),
-                // fetch(sportsNewsURL),
-                // fetch(fashionNewsURL)
+                fetch(worldNewsURL),
+                fetch(sportsNewsURL),
+                fetch(fashionNewsURL)
             ]);
 
             if (!worldResq.ok || !sportsResq.ok || !fashionResq.ok) {
                 throw new Error("One or more API responses failed.");
             }
 
-            const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
-                worldResq.json(),
-                sportsResq.json(),
-                fashionResq.json()
-            ])
-            // const worldNewsData = await worldResq.json();
-            // const sportsNewsData = await sportsResq.json();
-            // const fashionNewsData = await fashionResq.json();
+            // const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
+            //     worldResq.json(),
+            //     sportsResq.json(),
+            //     fashionResq.json()
+            // ])
+
+            const worldNewsData = await worldResq.json();
+            const sportsNewsData = await sportsResq.json();
+            const fashionNewsData = await fashionResq.json();
             
             
             
@@ -1031,6 +1074,17 @@ function DateFunction(){
 }
 DateFunction()
 
+function iconHandler(){
+    siteName.onclick =()=>{
+        window.location.reload()
+    }  
+    siteicons.onclick =()=>{
+        window.location.reload()
+    } 
+    siteicons1.onclick = ()=>{
+        window.location.reload()
+    } 
+}
 window.addEventListener('keydown', (event)=>{
     const searchbuds = selector('.searchbuds')
     const searchButton = selector('.searchbar span')
@@ -1059,17 +1113,5 @@ window.addEventListener('scroll',()=>{
 ianguages.addEventListener('click', ()=>{
     window.scrollTo({top:0, behavior: "smooth"})
 })
-
-// FOR STUDYING PURPOSES BRO LET BE
-
-// weatherInput.addEventListener('keydown', (event) => {
-//     if (event.key === 'Enter') {
-//       searchbuds.click(); // for weather search
-//     }
-//   });
-  
-//   siteSearchInput.addEventListener('keydown', (event) => {
-//     if (event.key === 'Enter') {
-//       button.click(); // for site-wide search
-//     }
-//   });
+iconHandler()
+Navdropdown()
