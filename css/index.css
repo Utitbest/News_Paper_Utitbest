@@ -1176,6 +1176,12 @@ footer .rightandhonnor p{
 .fortextparagram h5 .andwe{
     color: var(--darkblue-color);
 }
+.NosearchFound{
+    margin: 2em;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--darkblue-color);
+}
 .fortextparagram p{
     font-size: 15px;
     font-family: "Inter", sans-serif;

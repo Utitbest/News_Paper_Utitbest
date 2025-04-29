@@ -1025,7 +1025,7 @@ function displayArticles(articles) {
     mainContainer.innerHTML = ''; 
   
     if (articles.length === 0) {
-      mainContainer.innerHTML = '<p>No matching articles found.</p>';
+      mainContainer.innerHTML = '<p class="NosearchFound">No matching articles found.</p>';
       return;
     }
     const searchCon =  document.createElement('div')
