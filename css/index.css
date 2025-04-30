@@ -1780,6 +1780,19 @@ main .worldOfSport-fashion{
     .navstyle1{
         display: flex !important;
     }
+    #article1{
+        gap: 1em;
+    }
+    #article1 .searchEle{
+        flex-direction: column;
+        box-shadow:2px 2px 8px 2px var(--grey-color);
+    }
+    #article1 .searchEle .imagesearch{
+        width: 100%;
+    }
+    #article1 .searchEle .articlesCont{
+        width: 100%;
+    }
 }
 @media(max-width: 770px){
     header .smith_name .smith_name_contents{
@@ -1837,6 +1850,9 @@ main .worldOfSport-fashion{
     }
     #hometab .vidownew .videSet{
         overflow-x: auto !important;
+    }
+    #article1{
+        padding: 0 1em;
     }
 }
 @media(max-width: 570px){
