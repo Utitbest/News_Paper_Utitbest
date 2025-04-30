@@ -11,12 +11,12 @@ window.addEventListener("load", function () {
 // const UtitbestAPIkey1_MediastackApi = "193812853e940bef5a9117a82c572d02";                                                      //
 // const UtitbestAPIkey_GNewsApi = '0517399da9fa0881246f4d88bec3297c';                                                            //
 // const UtitbestAPIkey_API_SPORT = '0c4f2e5bc808b34df58cb5cd21d955be';
-// const UtitbestAPIkey_NEW = '3a6da55f29714013a7ae7d0875c9f219';                                                            //
+const UtitbestAPIkey_NEW = '3a6da55f29714013a7ae7d0875c9f219';                                                            //
 // //                                                                                                                                 //
 // // // const worldNewsURL = `https://gnews.io/api/v4/top-headlines?category=general&lang=en&apikey=${UtitbestAPIkey_GNewsApi}`;        //
-// const worldNewsURL = `https://newsapi.org/v2/top-headlines?category=general&apiKey=${UtitbestAPIkey_NEW}`                                 //
-// const sportsNewsURL = `https://newsapi.org/v2/top-headlines?category=technology&apiKey=${UtitbestAPIkey_NEW}`                                 //
-// const fashionNewsURL = `https://newsapi.org/v2/top-headlines?category=entertainment&apiKey=${UtitbestAPIkey_NEW}`  
+const worldNewsURL = `https://newsapi.org/v2/top-headlines?category=general&apiKey=${UtitbestAPIkey_NEW}`                                 //
+const sportsNewsURL = `https://newsapi.org/v2/top-headlines?category=technology&apiKey=${UtitbestAPIkey_NEW}`                                 //
+const fashionNewsURL = `https://newsapi.org/v2/top-headlines?category=entertainment&apiKey=${UtitbestAPIkey_NEW}`  
 // //////////////////////////////////////////////////////// NO-GO AREA //////////////////////////////////////////////////////////////
 
 
@@ -79,6 +79,7 @@ function NavigationLink(){
                         .catch(error =>{
                             console.error(error)
                             mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${error}, please reload the page</p>`;
+                            mainContainer.style.flex = '1'
                         })
                     break;
                     
@@ -102,6 +103,7 @@ function NavigationLink(){
                         .catch(error =>{
                             console.error(error)
                             mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${error}, please reload the page</p>`;
+                            mainContainer.style.flex = '1'
                         })
                     break;
                     
@@ -125,6 +127,7 @@ function NavigationLink(){
                         .catch(error =>{
                             console.error(error)
                             mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${error}, please reload the page</p>`;
+                            mainContainer.style.flex = '1'
                         })
                     break;
                 
@@ -144,6 +147,7 @@ function NavigationLink(){
                         .catch(error =>{
                             console.error(error)
                             mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${error}, please reload the page</p>`;
+                            mainContainer.style.flex = '1'
                         })
                     break;
 
@@ -204,15 +208,15 @@ async function TopFeedsContents(){
             throw new Error("One or more API responses failed.");
         }
 
-        const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
-            worldRes.json(),
-            sportsRes.json(),
-            fashionRes.json()
-        ])
+        // const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
+        //     worldRes.json(),
+        //     sportsRes.json(),
+        //     fashionRes.json()
+        // ])
 
-        // const worldNewsData = await worldRes.json()
-        // const sportsNewsData = await sportsRes.json()
-        // const fashionNewsData = await fashionRes.json()
+        const worldNewsData = await worldRes.json()
+        const sportsNewsData = await sportsRes.json()
+        const fashionNewsData = await fashionRes.json()
    
 
         const worldnewsObj = worldNewsData.articles.map(article =>({
@@ -470,6 +474,7 @@ async function TopFeedsContents(){
         console.error(erro)
         mainContainer.innerHTML = `<p class="errorcontact">Oops! Something went wrong while fetching news.
                                      Check your connection or API access. Err Status: ${erro}</p>`;
+                                     mainContainer.style.flex = '1'
         INtervalCleaner()
         
     }
@@ -489,26 +494,26 @@ async function News_Feeds(){
     INtervalCleaner()
     try{
         const [worldRes1, sportsRes1, fashionRes1] = await Promise.all([
-            fetch('/.netlify/functions/getWorldNews'),
-            fetch('/.netlify/functions/getSportsNews'),
-            fetch('/.netlify/functions/getFashionNews')
+            // fetch('/.netlify/functions/getWorldNews'),
+            // fetch('/.netlify/functions/getSportsNews'),
+            // fetch('/.netlify/functions/getFashionNews')
 
-            // fetch(worldNewsURL),
-            // fetch(sportsNewsURL),
-            // fetch(fashionNewsURL)
+            fetch(worldNewsURL),
+            fetch(sportsNewsURL),
+            fetch(fashionNewsURL)
         ]);
 
         if (!worldRes1.ok || !sportsRes1.ok || !fashionRes1.ok) {
             throw new Error("One or more API responses failed.");
         }
-        const [worldNewsData1, sportsNewsData1, fashionNewsData1] = await Promise.all([
-            worldRes1.json(),
-            sportsRes1.json(),
-            fashionRes1.json()
-        ])
-        // const worldNewsData1 = await worldRes1.json();
-        // const sportsNewsData1 = await sportsRes1.json();
-        // const fashionNewsData1 = await fashionRes1.json();
+        // const [worldNewsData1, sportsNewsData1, fashionNewsData1] = await Promise.all([
+        //     worldRes1.json(),
+        //     sportsRes1.json(),
+        //     fashionRes1.json()
+        // ])
+        const worldNewsData1 = await worldRes1.json();
+        const sportsNewsData1 = await sportsRes1.json();
+        const fashionNewsData1 = await fashionRes1.json();
         
         const worldnewsObj1 = worldNewsData1.articles.map(article =>({
             title: article.title,
@@ -685,6 +690,7 @@ async function News_Feeds(){
     }catch(err){
         console.error(err)
         mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${err}, please reload the page</p>`;
+        mainContainer.style.flex = '1'
     }
 }
 
@@ -799,6 +805,7 @@ async function countryweather() {
             return data.current_weather;
         } catch (error) {
             contentwapp.innerHTML = `<p class="errorcontact"> Errors while fetching request: ${error}. Please reload page</p>`;
+            mainContainer.style.flex = '1'
             return null;
         }
     }
@@ -918,6 +925,7 @@ async function SearchFormore() {
                 .catch(error => {
                   console.error(error);
                   mainContainer.innerHTML = `<p class="errorcontact">Failed to load home content: ${error}</p>`;
+                  mainContainer.style.flex = '1'
                     INtervalCleaner()
                 });
             }
@@ -1012,6 +1020,7 @@ async function SearchFormore() {
             }catch(ess){
                 console.error(ess)
                 mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${ess}, please reload the page</p>`;
+                mainContainer.style.flex = '1'
                 INtervalCleaner()
             }
         })
