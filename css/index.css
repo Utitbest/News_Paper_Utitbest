@@ -1280,6 +1280,8 @@ footer .rightandhonnor p{
 main .worldOfSport-fashion{
     display: grid;
     grid-template-columns: 2fr 1fr;
+    padding: .9em;
+    gap: 1em;
 }
 .supportwrapper{
     width: 100%;
@@ -1287,9 +1289,15 @@ main .worldOfSport-fashion{
     display: flex;
     flex-direction: column;
 }
+.ForSport{
+    gap: .7em;
+    flex-direction: column;
+    display: flex;
+}
 .contentwwaper{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    box-shadow: 1px 2px 4px 0px #c9c7c7;
 }
 .imagrag{
     overflow: hidden;
@@ -1335,6 +1343,7 @@ main .worldOfSport-fashion{
     height: auto;
     flex-direction: column;
     margin-bottom: .8em;
+    box-shadow: inset 3px -3px 5px 0px #d7d7d7;
 }
 .trike .Alligience1{
     width: 100%;
@@ -1634,7 +1643,7 @@ main .worldOfSport-fashion{
     content: '';
     position: absolute;
     top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
+    /* transform: translate(-50%, -50%); */
     width: 30px; height: 30px;
     border: 4px solid #ccc;
     border-top-color: #333;
@@ -1683,18 +1692,52 @@ main .worldOfSport-fashion{
         font-size: 12px ;
     }
 }
+@media(max-width: 900px){
+    .seniorwrapper{
+        flex-direction: column;
+        height: auto;
+    }
+    .fortextparagram{
+        height: auto;
+        width: 100%;
+    }
+    .seniorwrapper .forimagenews{
+        width: 100%;
+        height: 350px;
+    }
+}
+
 @media(max-width: 830px){
     #hometab .editorspicksworks{
         display: flex !important;
         flex-direction: column;
     }
 }
+
 @media(max-width: 800px){
+    main .worldOfSport-fashion{
+        grid-template-columns: 1fr 1fr;
+    }
     #hometab .topnotch{
         height: auto !important;
         max-height:unset !important ;
         display: flex !important;
         flex-direction: column;
+    }
+    #hometab .topnotch .side-news{
+        height: 500px;
+    }
+    .contentwwaper{
+        grid-template-columns: 1fr;
+    }
+    .fornewsconns{
+        padding: .3em;
+    }
+    .fornewsconns .poststatus{
+        display: none;
+    }
+    .trike{
+         box-shadow:1px 2px 4px 0px #c9c7c7;
     }
 }
 
@@ -1721,6 +1764,7 @@ main .worldOfSport-fashion{
     }
     .navstyle ul{
         flex-direction: column;
+        margin-bottom: 1em;
     }
     .navstyle .social_media{
         margin: .5em 0;
@@ -1755,24 +1799,38 @@ main .worldOfSport-fashion{
     }
 
 }
+@media(max-width: 745px){
+    .secondMainMan .addver img{
+        width: 90%;
+    }
+}
 @media(max-width: 640px){
     .bearer .matters{
         display: flex !important;
         flex-direction: column;
     }
 }
+@media(max-width:610px){
+    .topmane h3{
+        font-size: 15px;
+    }
+    .fortoborns .sporth3 {
+        font-size: 14px;
+    }
+}
 @media(max-width: 600px){
     #hometab .topnotch .main-news{
         height: 20em !important;
     }
-    .side-news{
+
+    #hometab .topnotch .side-news{
         max-height: unset !important;
         display: flex !important;
         flex-direction: column;
         height: auto;
     }
     #hometab .topnotch .side-news .fourplate{
-        height: 20em;
+        height: auto;
     }
     .absoluteside-content h4{
         font-size: 14px !important;
@@ -1793,6 +1851,44 @@ main .worldOfSport-fashion{
     }
     .ApartMent1 span {
         font-size: 15px;
+    }
+}
+@media(max-width: 550px){
+    .softman{
+        display: flex;
+        flex-direction: column;
+        gap:.3em ;
+    }
+    .otherNewsworldnews1{
+        display: grid !important;
+        grid-template-columns: 1fr ;
+        gap: 20px;
+    }
+    .containersnewsworld{
+        width: 100%;
+        padding: 0 .9em;
+    }
+    main .worldOfSport-fashion{
+        grid-template-columns: 1fr;
+    }
+    .trike{
+        gap: .5em;
+        padding: .5em 0;
+    }
+    .Alligience2{
+        gap: .5em;
+        display: flex;
+        flex-direction: column;
+    }
+    .textonecs{
+        flex-direction: column;
+        display: flex;
+        gap: .5em;
+    }
+    .fortextparagram p{
+        font-weight: 600;
+        text-shadow: unset;
+        font-size: 17px;
     }
 }
 @media(max-width: 460px){
