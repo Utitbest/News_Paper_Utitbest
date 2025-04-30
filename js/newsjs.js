@@ -11,12 +11,12 @@ window.addEventListener("load", function () {
 // const UtitbestAPIkey1_MediastackApi = "193812853e940bef5a9117a82c572d02";                                                      //
 // const UtitbestAPIkey_GNewsApi = '0517399da9fa0881246f4d88bec3297c';                                                            //
 // const UtitbestAPIkey_API_SPORT = '0c4f2e5bc808b34df58cb5cd21d955be';
-const UtitbestAPIkey_NEW = '3a6da55f29714013a7ae7d0875c9f219';                                                            //
+// const UtitbestAPIkey_NEW = '3a6da55f29714013a7ae7d0875c9f219';                                                            //
 // //                                                                                                                                 //
 // // // const worldNewsURL = `https://gnews.io/api/v4/top-headlines?category=general&lang=en&apikey=${UtitbestAPIkey_GNewsApi}`;        //
-const worldNewsURL = `https://newsapi.org/v2/top-headlines?category=general&apiKey=${UtitbestAPIkey_NEW}`                                 //
-const sportsNewsURL = `https://newsapi.org/v2/top-headlines?category=technology&apiKey=${UtitbestAPIkey_NEW}`                                 //
-const fashionNewsURL = `https://newsapi.org/v2/top-headlines?category=entertainment&apiKey=${UtitbestAPIkey_NEW}`  
+// const worldNewsURL = `https://newsapi.org/v2/top-headlines?category=general&apiKey=${UtitbestAPIkey_NEW}`                                 //
+// const sportsNewsURL = `https://newsapi.org/v2/top-headlines?category=technology&apiKey=${UtitbestAPIkey_NEW}`                                 //
+// const fashionNewsURL = `https://newsapi.org/v2/top-headlines?category=entertainment&apiKey=${UtitbestAPIkey_NEW}`  
 // //////////////////////////////////////////////////////// NO-GO AREA //////////////////////////////////////////////////////////////
 
 
@@ -275,7 +275,7 @@ async function TopFeedsContents(){
         const DateSplit = AllNews[0].publishedAt.split("T")[0]
         mainNews.setAttribute('href', AllNews[0].url)
         mainNews.innerHTML = `
-            <img src="${AllNews[0].image}" alt="" onload="this.parentElement.classList.remove('loasdi')">
+            <img src="${AllNews[0].image}" alt="" loading="lazy" onload="this.parentElement.classList.remove('loasdi')">
             <div class="ontoptrenn">
                 <div class="contenttag">
                     <div class="hellow">${AllNews[0].category}</div>
@@ -298,7 +298,7 @@ async function TopFeedsContents(){
             contaner.className = 'fourplate';
             contaner.setAttribute('href', Second_looping[index].url)
             contaner.innerHTML = `
-                <img src="${Second_looping[index].image}" alt="" class="topfeedsImage" onload="this.closest('.loasdi1')?.classList.remove('loasdi1')">
+                <img src="${Second_looping[index].image}" alt="" loading="lazy"  class="topfeedsImage" onload="this.closest('.loasdi1')?.classList.remove('loasdi1')">
                 <div class="sidenewscontent">
                     <div class="absoluteside-content">
                         <div style="position: relative; display:flex;">
@@ -326,7 +326,7 @@ async function TopFeedsContents(){
             matter.setAttribute('href', Third_looping[Numbs].url);
             matter.innerHTML = `
                 <div class="forimagestake">
-                    <img src="${Third_looping[Numbs].image}" alt="">
+                    <img src="${Third_looping[Numbs].image}" alt="" loading="lazy">
                     <div class="ontopsma">${Third_looping[Numbs].category}</div>
                 </div>
                 <div class="hearder">
@@ -363,7 +363,7 @@ async function TopFeedsContents(){
             smallnewContain.innerHTML = `
                 <div class="smallnew">
                     <div class="foke">
-                        <img src="${Fourth_looping[NOo].image}" alt="">
+                        <img src="${Fourth_looping[NOo].image}" alt="" loading="lazy">
                         <div class="aboveall">${Fourth_looping[NOo].category}</div>
                     </div>
                     <div class="wordsnote">
@@ -464,7 +464,7 @@ async function TopFeedsContents(){
           }
         
         
-
+        //   observeImages()
 
     }catch (erro) {
         console.error(erro)
@@ -557,7 +557,7 @@ async function News_Feeds(){
 
         forimagenews.setAttribute('href', FirstFetch[0].url)
         forimagenews.innerHTML = `
-            <img src="${FirstFetch[0].image}" alt="" onload="this.parentElement.classList.remove('loasdi1')">
+            <img src="${FirstFetch[0].image}" alt="" onload="this.parentElement.classList.remove('loasdi1')" loading="lazy">
             <div class="forimagenews-concs">
                 <div class="peace-unto">
                     <div class="softman">
@@ -584,7 +584,7 @@ async function News_Feeds(){
 
         forimagenews1.setAttribute('href', FirstFetch[2].url)
         forimagenews1.innerHTML = `
-            <img src="${FirstFetch[2].image}" alt="" onload="this.parentElement.classList.remove('loasdi1')">
+            <img src="${FirstFetch[2].image}" alt="" onload="this.parentElement.classList.remove('loasdi1')" loading="lazy">
             <div class="forimagenews-concs">
                 <div class="peace-unto">
                     <div class="softman">
@@ -607,7 +607,7 @@ async function News_Feeds(){
             containersnewsworld1.setAttribute('href', worldNews[gene].url)
             containersnewsworld1.innerHTML = `
                 <div class="No-image">
-                <img src="${worldNews[gene].image}" alt="">
+                <img src="${worldNews[gene].image}" alt="" loading="lazy">
                 </div>
                 <div class="textonecs">
                     <h3>${worldNews[gene].title}</h3>
@@ -636,7 +636,7 @@ async function News_Feeds(){
              contentwwaper.className = 'contentwwaper';
              contentwwaper.innerHTML = `
                     <div class="imagrag">
-                        <img src="${sportify[wane].image}" alt="">
+                        <img src="${sportify[wane].image}" alt="" loading="lazy">
                     </div>
                     <div class="fornewsconns">
                         <h2>${sportify[wane].title}</h2>
@@ -668,7 +668,7 @@ async function News_Feeds(){
             trike.className = 'trike';
             trike.innerHTML = `
                 <div class="Alligience1">
-                    <img src="${fashion_way[dkd].image}" alt="">
+                    <img src="${fashion_way[dkd].image}" alt="" loading="lazy">
                 </div>
                 <div class="Alligience2">
                     <h2>${fashion_way[dkd].title}</h2>
@@ -681,7 +681,7 @@ async function News_Feeds(){
             `;
             fashion_stars.append(trike)
         })
-
+        // observeImages()
     }catch(err){
         console.error(err)
         mainContainer.innerHTML = `<p class="errorcontact">Failed to fetch: ${err}, please reload the page</p>`;
@@ -1050,6 +1050,7 @@ function displayArticles(articles) {
       searchCon.appendChild(articleEl);
     });
     mainContainer.appendChild(searchCon)
+    // observeImages()
 }
 function escapeHTML(str) {
     return str.replace(/[&<>"']/g, match => ({
@@ -1124,3 +1125,25 @@ ianguages.addEventListener('click', ()=>{
 })
 iconHandler()
 Navdropdown()
+
+// function observeImages() {
+//     const observer = new IntersectionObserver((entries, observer) => {
+//       entries.forEach(entry => {
+//         const img = entry.target;
+
+//         if (entry.isIntersecting) {
+//           // Log for debugging
+//           console.log(`Image ${img.src} is in view`);
+          
+//           // Set loading to 'eager' when the image is in view
+//           img.setAttribute('loading', 'eager');
+//           observer.unobserve(img); // Stop observing once processed
+//         }
+//       });
+//     }, { threshold: 0 }); // Trigger as soon as any part of the image is visible
+
+//     // Observe all dynamically added images
+//     document.querySelectorAll('img').forEach(img => {
+//       observer.observe(img);
+//     });
+//   }
