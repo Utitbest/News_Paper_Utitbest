@@ -208,15 +208,15 @@ async function TopFeedsContents(){
             throw new Error("One or more API responses failed.");
         }
 
-        // const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
-        //     worldRes.json(),
-        //     sportsRes.json(),
-        //     fashionRes.json()
-        // ])
+        const [worldNewsData, sportsNewsData, fashionNewsData] = await Promise.all([
+            worldRes.json(),
+            sportsRes.json(),
+            fashionRes.json()
+        ])
 
-        const worldNewsData = await worldRes.json()
-        const sportsNewsData = await sportsRes.json()
-        const fashionNewsData = await fashionRes.json()
+        // const worldNewsData = await worldRes.json()
+        // const sportsNewsData = await sportsRes.json()
+        // const fashionNewsData = await fashionRes.json()
    
 
         const worldnewsObj = worldNewsData.articles.map(article =>({
@@ -494,26 +494,26 @@ async function News_Feeds(){
     INtervalCleaner()
     try{
         const [worldRes1, sportsRes1, fashionRes1] = await Promise.all([
-            // fetch('/.netlify/functions/getWorldNews'),
-            // fetch('/.netlify/functions/getSportsNews'),
-            // fetch('/.netlify/functions/getFashionNews')
+            fetch('/.netlify/functions/getWorldNews'),
+            fetch('/.netlify/functions/getSportsNews'),
+            fetch('/.netlify/functions/getFashionNews')
 
-            fetch(worldNewsURL),
-            fetch(sportsNewsURL),
-            fetch(fashionNewsURL)
+            // fetch(worldNewsURL),
+            // fetch(sportsNewsURL),
+            // fetch(fashionNewsURL)
         ]);
 
         if (!worldRes1.ok || !sportsRes1.ok || !fashionRes1.ok) {
             throw new Error("One or more API responses failed.");
         }
-        // const [worldNewsData1, sportsNewsData1, fashionNewsData1] = await Promise.all([
-        //     worldRes1.json(),
-        //     sportsRes1.json(),
-        //     fashionRes1.json()
-        // ])
-        const worldNewsData1 = await worldRes1.json();
-        const sportsNewsData1 = await sportsRes1.json();
-        const fashionNewsData1 = await fashionRes1.json();
+        const [worldNewsData1, sportsNewsData1, fashionNewsData1] = await Promise.all([
+            worldRes1.json(),
+            sportsRes1.json(),
+            fashionRes1.json()
+        ])
+        // const worldNewsData1 = await worldRes1.json();
+        // const sportsNewsData1 = await sportsRes1.json();
+        // const fashionNewsData1 = await fashionRes1.json();
         
         const worldnewsObj1 = worldNewsData1.articles.map(article =>({
             title: article.title,
