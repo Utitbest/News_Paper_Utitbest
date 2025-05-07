@@ -14,7 +14,7 @@ async function fetchVideosForTopic(topic) {
     }
 
     const data = await res.json();
-
+    console.log(data)
     if (!data.items || !Array.isArray(data.items)) {
       console.warn(`⚠️ No items returned for topic: ${topic}`);
       return [];
